@@ -66,8 +66,12 @@ fi
 
 # Bind Apache to Render's PORT (default 10000)
 LISTEN_PORT="${PORT:-10000}"
-sed -i "s/Listen [0-9]\+/Listen ${LISTEN_PORT}/" /etc/apache2/ports.conf
-sed -i "s/:[0-9]\+>/:${LISTEN_PORT}>/" /etc/apache2/sites-available/000-default.conf
+
+sed -i "s/Listen 80/Listen ${LISTEN_PORT}/" /etc/apache2/ports.conf
+sed -i "s/:80/:${LISTEN_PORT}/g" /etc/apache2/sites-available/000-default.conf
+
+# sed -i "s/Listen [0-9]\+/Listen ${LISTEN_PORT}/" /etc/apache2/ports.conf
+# sed -i "s/:[0-9]\+>/:${LISTEN_PORT}>/" /etc/apache2/sites-available/000-default.conf
 
 echo "[entrypoint] Starting Apache on port ${LISTEN_PORT}..."
 exec apache2-foreground

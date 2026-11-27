@@ -30,7 +30,7 @@ RUN mkdir -p storage/uploads storage/logs storage/mail storage/backups \
     && chown -R www-data:www-data /var/www/html /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf /var/run/apache2 /var/lock/apache2 /var/log/apache2 \
     && chmod +x /var/www/html/docker/entrypoint.sh
 
-USER www-data
+# USER www-data
 
 EXPOSE 10000
 
