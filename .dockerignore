@@ -1,0 +1,14 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+node_modules
+vendor
+storage/uploads/*
+storage/logs/*
+storage/mail/*
+storage/backups/*
+epap_backup.sql
+.idea
+.vscode

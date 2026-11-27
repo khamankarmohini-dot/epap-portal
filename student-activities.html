@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>My Academic Activities &amp; Submissions | EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Unified Top Navigation Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn" aria-label="Toggle navigation menu">
+            <i class="bi bi-list fs-5"></i>
+        </button>
+
+        <div class="d-flex align-items-center min-w-0">
+            <div class="brand-badge me-2 me-md-3 flex-shrink-0">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block text-truncate">
+                <h6 class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.92rem;" data-setting="institution_name">Academic Portal</h6>
+                <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;"><span data-setting="department_name">Department</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <span class="portal-tag portal-tag-student d-none d-md-inline-block">Student Portal</span>
+
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-muted small ms-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><a class="dropdown-item small" href="student-dashboard.html"><i class="bi bi-grid-1x2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-person me-2"></i>Profile &amp; Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar" id="appSidebar" aria-label="Student navigation">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Academic Session</div>
+                <div class="fw-bold text-white small" id="sidebarSessionText">Loading...</div>
+                <div class="badge bg-primary bg-opacity-25 text-white mt-1" id="sidebarClassBadge" style="font-size: 0.7rem;">—</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Academic Main</li>
+                <li><a href="student-dashboard.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                <li><a href="student-activities.html" class="nav-link active"><i class="bi bi-card-checklist"></i><span>My Activities</span><span class="badge bg-warning text-dark d-none" id="sidebarPendingBadge"></span></a></li>
+                <li><a href="student-results.html" class="nav-link"><i class="bi bi-file-earmark-spreadsheet"></i><span>Semester Results</span></a></li>
+
+                <li class="nav-header">Analytics &amp; Skills</li>
+                <li><a href="student-analytics.html" class="nav-link"><i class="bi bi-graph-up-arrow"></i><span>Predictive Analytics</span></a></li>
+                <li><a href="student-practice.html" class="nav-link"><i class="bi bi-code-square"></i><span>LeetCode Practice</span><span class="badge bg-success d-none" id="sidebarPracticeBadge"></span></a></li>
+
+                <li class="nav-header">Account</li>
+                <li><a href="profile.html" class="nav-link"><i class="bi bi-person-gear"></i><span>Profile &amp; Password</span></a></li>
+                <li><a href="login.html" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i><span>Sign Out</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">Subject Activities &amp; Submission Portal</h4>
+                    <p class="text-muted small mb-0">Assignments, Lab Journals, and Project Milestones assigned by <span data-setting="department_name">Department</span> faculty</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" id="activityFilterSelect" aria-label="Filter activities" style="min-width: 190px;">
+                        <option value="all">All Activities (0)</option>
+                        <option value="pending">Action Required (0)</option>
+                        <option value="submitted">Submitted (0)</option>
+                        <option value="evaluated">Graded &amp; Evaluated (0)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="globalToastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" aria-live="polite"></div>
+
+            <!-- Activity Cards Container -->
+            <div class="row g-4" id="activitiesContainer">
+                <div class="col-12">
+                    <div class="card card-academic border-0 shadow-sm p-4 text-center text-muted small">
+                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>Loading activities...
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Submission Modal -->
+    <div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="modalActivityTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h6 class="modal-title fw-bold text-dark" id="modalActivityTitle">Submit Activity</h6>
+                        <small class="text-muted" id="modalSubjectName">Subject</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="submissionForm" onsubmit="handleFormSubmission(event)">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold" for="subFileInput">Attach Solution File (PDF, ZIP, Code)</label>
+                            <input class="form-control" id="subFileInput" type="file" required>
+                            <div class="form-text" style="font-size: 0.75rem;">Supported formats: .pdf, .zip, .cpp, .c, .java, .py, .txt, .docx</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold" for="subUrlInput">GitHub / Live Project URL (Optional)</label>
+                            <input class="form-control" id="subUrlInput" type="url" placeholder="https://github.com/username/project">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold" for="subNotesInput">Submission Notes &amp; Remarks for Teacher</label>
+                            <textarea class="form-control" id="subNotesInput" rows="3" placeholder="Explain your approach, testing steps, or instructions for the faculty..."></textarea>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="academicIntegrity" required checked>
+                            <label class="form-check-label small text-muted" for="academicIntegrity">
+                                I confirm this submission is my own original work adhering to the Academic Integrity Code.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="submitWorkBtn" class="btn btn-primary btn-sm px-4 fw-medium" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);">
+                            <i class="bi bi-cloud-upload me-1"></i>Confirm &amp; Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">Academic Institution</strong> &bull; <span data-setting="department_name">Department</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination &amp; Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script>
+        let currentActivityId = null;
+
+        function prepareSubmissionModal(id, title, subject, maxMarks) {
+            currentActivityId = id;
+            document.getElementById('modalActivityTitle').innerText = title;
+            document.getElementById('modalSubjectName').innerHTML = `${escapeHtml(subject)} &bull; Max Marks: ${Number(maxMarks)}`;
+        }
+
+        function applyActivityFilter() {
+            const filterEl = document.getElementById('activityFilterSelect');
+            const filter = filterEl ? filterEl.value : 'all';
+            document.querySelectorAll('.activity-card-item').forEach(item => {
+                item.style.display = (filter === 'all' || item.dataset.status === filter) ? 'block' : 'none';
+            });
+        }
+
+        async function loadActivities() {
+            const res = await EPAP_API.epapFetch('/api/student/activities');
+            const activities = await res.json();
+            const container = document.getElementById('activitiesContainer');
+            if (!container) return;
+
+            const nowMs = Date.now() + (window.EPAP_SERVER_OFFSET_MS || 0);
+            let pendingCount = 0;
+            let submittedCount = 0;
+            let evaluatedCount = 0;
+
+            activities.forEach(act => {
+                if (act.sub_status === 'graded') evaluatedCount++;
+                else if (act.submission_id) submittedCount++;
+                else pendingCount++;
+            });
+
+            const filterEl = document.getElementById('activityFilterSelect');
+            if (filterEl) {
+                const cur = filterEl.value || 'all';
+                filterEl.options[0].textContent = `All Activities (${activities.length})`;
+                filterEl.options[1].textContent = `Action Required (${pendingCount})`;
+                filterEl.options[2].textContent = `Submitted (${submittedCount})`;
+                filterEl.options[3].textContent = `Graded & Evaluated (${evaluatedCount})`;
+                filterEl.value = cur;
+            }
+
+            if (activities.length === 0) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-light border text-center">No activities assigned to your division yet.</div></div>';
+                return;
+            }
+
+            container.innerHTML = activities.map(act => {
+                const isGraded = act.sub_status === 'graded';
+                const isSubmitted = !!act.submission_id;
+                const isOverdue = !isSubmitted && (new Date(act.deadline).getTime() < nowMs);
+                const statusKey = isGraded ? 'evaluated' : (isSubmitted ? 'submitted' : 'pending');
+                const deadlineStr = new Date(act.deadline).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+
+                let badgeHtml = '';
+                if (isGraded) {
+                    badgeHtml = `<span class="badge bg-success-subtle text-success">Graded: ${Number(act.marks)}/${Number(act.max_marks)}</span>`;
+                } else if (isSubmitted) {
+                    badgeHtml = `<span class="badge bg-info-subtle text-info">${act.is_late ? 'Submitted Late' : 'Submitted On-Time'}</span>`;
+                } else if (isOverdue) {
+                    badgeHtml = `<span class="deadline-badge deadline-urgent countdown-timer" data-deadline="${escapeHtml(act.deadline)}">Overdue</span>
+                                 <span class="badge bg-danger-subtle text-danger">${Number(act.allow_late) ? 'Late Allowed' : 'Closed'}</span>`;
+                } else {
+                    badgeHtml = `<span class="countdown-timer deadline-badge deadline-warning" data-deadline="${escapeHtml(act.deadline)}">Calculating...</span>
+                                 <span class="badge bg-danger-subtle text-danger">Pending Submission</span>`;
+                }
+
+                const downloadBtn = (isSubmitted && act.original_name)
+                    ? `<div class="mt-1"><a href="/api/student/submissions/${Number(act.submission_id)}/download" class="small text-decoration-none"><i class="bi bi-download me-1"></i>${escapeHtml(act.original_name)}</a></div>`
+                    : '';
+
+                const canSubmit = !isGraded && (!isOverdue || Number(act.allow_late) === 1 || isSubmitted);
+                let actionHtml = '';
+                if (isGraded) {
+                    actionHtml = `<div class="text-end"><span class="fs-5 fw-bold text-success">${Number(act.marks)} / ${Number(act.max_marks)}</span><div class="small text-muted">${escapeHtml(act.feedback || 'Graded')}</div>${downloadBtn}</div>`;
+                } else if (isSubmitted) {
+                    actionHtml = `<div class="text-end"><span class="badge bg-success mb-1"><i class="bi bi-check-all me-1"></i>Submitted</span>${downloadBtn}
+                        <button class="btn btn-outline-secondary btn-sm mt-2 submit-open-btn" data-id="${Number(act.id)}" data-title="${escapeHtml(act.title)}" data-subj="${escapeHtml(act.subject_code)}" data-max="${Number(act.max_marks)}">Resubmit</button></div>`;
+                } else if (canSubmit) {
+                    actionHtml = `<button class="btn btn-primary btn-sm px-3 submit-open-btn" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);"
+                        data-id="${Number(act.id)}" data-title="${escapeHtml(act.title)}" data-subj="${escapeHtml(act.subject_code)}" data-max="${Number(act.max_marks)}">
+                        <i class="bi bi-upload me-1"></i>Submit Work
+                    </button>`;
+                } else {
+                    actionHtml = `<span class="badge bg-secondary-subtle text-secondary">Deadline Closed</span>`;
+                }
+
+                return `
+                <div class="col-12 activity-card-item" data-status="${statusKey}">
+                    <div class="card card-academic border-0 shadow-sm p-3">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                    <span class="badge bg-primary px-2 py-1">${escapeHtml(act.subject_code)}</span>
+                                    ${badgeHtml}
+                                </div>
+                                <h5 class="fw-bold text-dark mb-2">${escapeHtml(act.title)}</h5>
+                                <p class="text-muted small mb-3">${escapeHtml(act.description || '')}</p>
+                                <div class="d-flex flex-wrap gap-4 text-muted small">
+                                    <div><i class="bi bi-person-fill text-primary me-1"></i><strong>Faculty:</strong> ${escapeHtml(act.faculty_name)}</div>
+                                    <div><i class="bi bi-calendar-event me-1"></i><strong>Due Date:</strong> ${escapeHtml(deadlineStr)}</div>
+                                    <div><i class="bi bi-award me-1"></i><strong>Max Marks:</strong> ${Number(act.max_marks)}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                                ${actionHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            container.querySelectorAll('.submit-open-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    prepareSubmissionModal(Number(btn.dataset.id), btn.dataset.title, btn.dataset.subj, Number(btn.dataset.max));
+                    bootstrap.Modal.getOrCreateInstance(document.getElementById('submitModal')).show();
+                });
+            });
+
+            applyActivityFilter();
+            updateCountdowns();
+        }
+
+        async function handleFormSubmission(e) {
+            e.preventDefault();
+            const form = e.target;
+            const fileInput = form.querySelector('input[type="file"]');
+            const urlInput = form.querySelector('input[type="url"]');
+            const notesInput = form.querySelector('textarea');
+            const submitBtn = document.getElementById('submitWorkBtn');
+
+            if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+                showToast('Please select a file to upload.', 'error');
+                return;
+            }
+
+            const fd = new FormData();
+            fd.append('activity_id', String(currentActivityId));
+            fd.append('file', fileInput.files[0]);
+            if (urlInput && urlInput.value.trim()) fd.append('project_url', urlInput.value.trim());
+            if (notesInput && notesInput.value.trim()) fd.append('notes', notesInput.value.trim());
+
+            EPAP_UI.setButtonLoading(submitBtn, true, 'Submitting...');
+            try {
+                const res = await EPAP_API.epapFetch('/api/student/submit', {
+                    method: 'POST',
+                    body: fd
+                });
+                const data = await res.json();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('submitModal'));
+                if (modal) modal.hide();
+
+                if (!res.ok) {
+                    showToast(data.error || 'Submission failed.', 'error');
+                    return;
+                }
+                form.reset();
+                showToast(data.is_late ? 'Submitted (marked as late submission).' : 'Assignment successfully submitted!', 'success');
+                await EPAP_SHELL.refreshNow(true);
+            } catch (err) {
+                showToast('Network error submitting assignment.', 'error');
+            } finally {
+                EPAP_UI.setButtonLoading(submitBtn, false);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('student');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+            EPAP_SHELL.init({ role: 'student', onRefresh: loadActivities });
+        });
+    </script>
+</body>
+</html>

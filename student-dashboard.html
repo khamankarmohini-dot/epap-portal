@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Student Dashboard | EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Unified Top Navigation Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn" aria-label="Toggle navigation menu">
+            <i class="bi bi-list fs-5"></i>
+        </button>
+
+        <div class="d-flex align-items-center min-w-0">
+            <div class="brand-badge me-2 me-md-3 flex-shrink-0">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block text-truncate">
+                <h6 class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.92rem;" data-setting="institution_name">Academic Portal</h6>
+                <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;"><span data-setting="department_name">Department</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <span class="portal-tag portal-tag-student d-none d-md-inline-block">Student Portal</span>
+
+            <!-- Notifications Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm position-relative rounded-circle p-2" data-bs-toggle="dropdown" aria-label="Notifications">
+                    <i class="bi bi-bell fs-6"></i>
+                    <span id="headerNotifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size: 0.65rem;" aria-live="polite">0</span>
+                </button>
+                <div id="headerNotifMenu" class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-2" style="width: 320px; max-width: 90vw;">
+                    <div class="d-flex justify-content-between align-items-center px-2 py-1 mb-2 border-bottom">
+                        <span class="fw-bold small">Recent Notifications</span>
+                        <a href="#" id="markNotifReadBtn" class="small text-decoration-none">Mark read</a>
+                    </div>
+                    <div class="p-2 text-muted small">Loading notifications...</div>
+                </div>
+            </div>
+
+            <!-- Profile Menu -->
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-muted small ms-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><h6 class="dropdown-header">Student Profile</h6></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-person me-2"></i>My Academic Profile</a></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-shield-lock me-2"></i>Change Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body Layout -->
+    <div class="app-layout">
+
+        <!-- Left Sidebar Navigation -->
+        <aside class="app-sidebar" id="appSidebar" aria-label="Student navigation">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Academic Session</div>
+                <div class="fw-bold text-white small" id="sidebarSessionText">Loading...</div>
+                <div class="badge bg-primary bg-opacity-25 text-white mt-1" id="sidebarClassBadge" style="font-size: 0.7rem;">—</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Academic Main</li>
+                <li>
+                    <a href="student-dashboard.html" class="nav-link active">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-activities.html" class="nav-link">
+                        <i class="bi bi-card-checklist"></i>
+                        <span>My Activities</span>
+                        <span class="badge bg-warning text-dark d-none" id="sidebarPendingBadge"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-results.html" class="nav-link">
+                        <i class="bi bi-file-earmark-spreadsheet"></i>
+                        <span>Semester Results</span>
+                    </a>
+                </li>
+
+                <li class="nav-header">Analytics &amp; Skills</li>
+                <li>
+                    <a href="student-analytics.html" class="nav-link">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <span>Predictive Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-practice.html" class="nav-link">
+                        <i class="bi bi-code-square"></i>
+                        <span>LeetCode Practice</span>
+                        <span class="badge bg-success d-none" id="sidebarPracticeBadge"></span>
+                    </a>
+                </li>
+
+                <li class="nav-header">Account</li>
+                <li>
+                    <a href="profile.html" class="nav-link">
+                        <i class="bi bi-person-gear"></i>
+                        <span>Profile &amp; Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html" class="nav-link text-danger">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Pane -->
+        <main class="main-content">
+
+            <!-- Greeting Banner -->
+            <div class="card-academic p-4 mb-4 border-0 shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <span class="badge bg-primary text-white mb-2">Academic Year <span data-setting="academic_year">—</span></span>
+                        <h4 class="fw-bold text-dark mb-1" id="welcomeHeading">Hello!</h4>
+                        <p class="text-muted small mb-0" id="enrollmentSummary">
+                            <span class="placeholder-glow"><span class="placeholder col-6"></span></span>
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+                        <a href="student-practice.html" class="btn btn-warning text-dark fw-bold btn-sm shadow-sm">
+                            <i class="bi bi-play-circle-fill me-1"></i>Resume Practice
+                        </a>
+                        <a href="student-activities.html" class="btn btn-primary btn-sm shadow-sm" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);">
+                            <i class="bi bi-upload me-1"></i>Submit Work
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top 4 KPI Stat Widgets -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-widget">
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div>
+                            <div class="stat-number" id="statSgpa">—</div>
+                            <div class="stat-label" id="sgpaStatLabel">Current SGPA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-widget">
+                        <div class="stat-icon bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-award-fill"></i>
+                        </div>
+                        <div>
+                            <div class="stat-number" id="statCgpa">—</div>
+                            <div class="stat-label">Cumulative CGPA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-widget">
+                        <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <div class="stat-number" id="statPending">—</div>
+                            <div class="stat-label">Pending Activities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-widget">
+                        <div class="stat-icon bg-indigo bg-opacity-10" style="color: var(--zeal-indigo);">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                        <div>
+                            <div class="stat-number" id="statCoding">—</div>
+                            <div class="stat-label">Coding Qs Solved</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="row g-4 mb-4">
+
+                <!-- Upcoming Deadlines Card -->
+                <div class="col-lg-7">
+                    <div class="card card-academic border-0 shadow-sm h-100">
+                        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom gap-2">
+                            <div class="min-w-0">
+                                <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-alarm text-danger me-2"></i>Upcoming Activity Deadlines</h6>
+                                <small class="text-muted"><span data-setting="department_name">Department</span> faculty assignments</small>
+                            </div>
+                            <a href="student-activities.html" class="btn btn-outline-primary btn-sm flex-shrink-0">View All (<span id="viewAllActivitiesCount">0</span>)</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush" id="upcomingActivitiesList">
+                                <div class="p-4 text-center text-muted small">Loading activities...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Marks & Faculty Feedback -->
+                <div class="col-lg-5">
+                    <div class="card card-academic border-0 shadow-sm h-100">
+                        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center gap-2">
+                            <div class="min-w-0">
+                                <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-check2-circle text-success me-2"></i>Recent Marks &amp; Reviews</h6>
+                                <small class="text-muted">Graded by subject teachers</small>
+                            </div>
+                            <a href="student-results.html" class="btn btn-outline-secondary btn-sm flex-shrink-0">Full Marksheet</a>
+                        </div>
+                        <div class="card-body p-3" id="recentMarksCard">
+                            <div class="text-center text-muted small py-3">Loading recent marks...</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Analytics Visualizations Row -->
+            <div class="row g-4">
+
+                <div class="col-lg-7">
+                    <div class="card card-academic border-0 shadow-sm p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-graph-up text-primary me-2"></i>Semester Academic Progression</h6>
+                                <small class="text-muted">Student SGPA vs <span data-setting="benchmark_label">Department Benchmark</span></small>
+                            </div>
+                            <a href="student-analytics.html" class="btn btn-link btn-sm text-decoration-none">Deep Analytics &rarr;</a>
+                        </div>
+                        <div style="height: 280px;">
+                            <canvas id="studentProgressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card card-academic border-0 shadow-sm p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-radar text-indigo me-2" style="color: var(--zeal-indigo);"></i>Subject Competency Radar</h6>
+                                <small class="text-muted">Evaluated across <span data-setting="curriculum_label">University Curriculum</span></small>
+                            </div>
+                        </div>
+                        <div style="height: 280px;">
+                            <canvas id="studentRadarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">Academic Institution</strong> &bull; <span data-setting="department_name">Department</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination &amp; Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script src="assets/js/analytics.js"></script>
+    <script>
+        async function loadStudentDashboard(summary) {
+            const [activitiesRes, analyticsRes, notifRes] = await Promise.all([
+                EPAP_API.epapFetch('/api/student/activities'),
+                EPAP_API.epapFetch('/api/student/analytics'),
+                EPAP_API.epapFetch('/api/student/notifications')
+            ]);
+
+            const activities = await activitiesRes.json();
+            const analytics  = await analyticsRes.json();
+            const notifs     = await notifRes.json();
+
+            renderSemesterProgressChart('studentProgressChart', analytics.semesters || []);
+            renderSubjectRadarChart('studentRadarChart', analytics.subjects || []);
+
+            const stu = summary.student || {};
+            const usr = summary.user || {};
+
+            document.getElementById('welcomeHeading').textContent = `Hello, ${usr.full_name || 'Student'}!`;
+            document.getElementById('enrollmentSummary').innerHTML =
+                `Enrolled in <strong>${escapeHtml(stu.year)} (${escapeHtml(summary.department_name)}) &mdash; Div ${escapeHtml(stu.division)}</strong>
+                 &bull; PRN: <span class="font-monospace fw-bold text-dark">${escapeHtml(stu.zprn)}</span>
+                 &bull; Roll No: <strong>${Number(stu.roll_no || 0)}</strong>`;
+
+            document.getElementById('statSgpa').textContent = Number(summary.sgpa || 0).toFixed(2);
+            document.getElementById('sgpaStatLabel').textContent = stu.semester ? `Current SGPA (Sem ${stu.semester})` : 'Current SGPA';
+            document.getElementById('statCgpa').textContent = Number(summary.cgpa || 0).toFixed(2);
+            document.getElementById('statPending').textContent = String(summary.pending_activities ?? 0);
+            document.getElementById('statCoding').textContent = `${summary.coding_solved ?? 0}/${summary.coding_total ?? 0}`;
+
+            // Notifications
+            const notifMenu = document.getElementById('headerNotifMenu');
+            if (notifMenu && Array.isArray(notifs.items)) {
+                const itemsHtml = notifs.items.slice(0, 5).map(n => `
+                    <a href="${escapeHtml(n.link || '#')}" class="dropdown-item p-2 rounded-2 mb-1">
+                        <div class="small fw-bold text-truncate">${escapeHtml(n.title)}</div>
+                        <div class="text-muted text-wrap" style="font-size: 0.72rem;">${escapeHtml(n.message)}</div>
+                    </a>`).join('') || '<div class="p-2 text-muted small">No notifications.</div>';
+                notifMenu.innerHTML = `<div class="d-flex justify-content-between align-items-center px-2 py-1 mb-2 border-bottom">
+                    <span class="fw-bold small">Recent Notifications</span>
+                    <a href="#" id="markNotifReadBtn" class="small text-decoration-none">Mark read</a>
+                </div>${itemsHtml}`;
+                const mrBtn = document.getElementById('markNotifReadBtn');
+                if (mrBtn) mrBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    await EPAP_API.epapFetch('/api/student/notifications/read', { method: 'POST' });
+                    EPAP_SHELL.refreshNow(true);
+                });
+            }
+
+            // Upcoming deadlines list: prioritize pending (not submitted) first
+            const listGroup = document.getElementById('upcomingActivitiesList');
+            if (listGroup) {
+                const pendingList = activities.filter(a => !a.submission_id);
+                const submittedList = activities.filter(a => a.submission_id && a.sub_status !== 'graded');
+                const upcoming = [...pendingList, ...submittedList].slice(0, 5);
+
+                if (upcoming.length === 0) {
+                    listGroup.innerHTML = '<div class="p-4 text-center text-muted small">All caught up! No pending activities.</div>';
+                } else {
+                    const nowMs = Date.now() + (window.EPAP_SERVER_OFFSET_MS || 0);
+                    listGroup.innerHTML = upcoming.map(act => {
+                        const isSubmitted = !!act.submission_id;
+                        const deadline = new Date(act.deadline);
+                        const isOverdue = deadline.getTime() < nowMs;
+                        return `
+                        <div class="list-group-item p-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="min-w-0 flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <span class="badge bg-primary-subtle text-primary fw-bold flex-shrink-0" style="font-size:0.72rem;">${escapeHtml(act.subject_code)}</span>
+                                    <strong class="text-dark text-truncate">${escapeHtml(act.title)}</strong>
+                                </div>
+                                <div class="text-muted small">
+                                    Faculty: ${escapeHtml(act.faculty_name)} &bull; Max Marks: ${Number(act.max_marks)} &bull;
+                                    Due: ${escapeHtml(deadline.toLocaleString('en-IN', {dateStyle:'medium',timeStyle:'short'}))}
+                                </div>
+                            </div>
+                            <div class="text-end flex-shrink-0">
+                                ${isSubmitted
+                                    ? `<span class="badge bg-success-subtle text-success py-1 px-2 d-inline-block" style="font-size:0.75rem;"><i class="bi bi-check-all me-1"></i>Submitted</span>
+                                       <div class="small text-muted">Awaiting Marks</div>`
+                                    : `<span class="deadline-badge ${isOverdue ? 'deadline-urgent' : 'deadline-warning'} countdown-timer mb-2 d-inline-block" data-deadline="${escapeHtml(act.deadline)}">Calculating...</span>
+                                       <div><a href="student-activities.html" class="btn btn-sm btn-outline-dark py-1 px-2" style="font-size:0.78rem;"><i class="bi bi-upload me-1"></i>Submit</a></div>`
+                                }
+                            </div>
+                        </div>`;
+                    }).join('');
+                    updateCountdowns();
+                }
+            }
+
+            // Recent marks
+            const marksCard = document.getElementById('recentMarksCard');
+            if (marksCard) {
+                const graded = activities.filter(a => a.sub_status === 'graded');
+                if (graded.length === 0) {
+                    marksCard.innerHTML = '<div class="text-center text-muted small py-3">No graded submissions yet.</div>';
+                } else {
+                    marksCard.innerHTML = graded.slice(0, 3).map((act, i) => `
+                        <div class="p-3 bg-light rounded-3 ${i > 0 ? 'mt-3' : ''} border">
+                            <div class="d-flex justify-content-between align-items-center mb-1 gap-2">
+                                <span class="fw-bold text-dark small text-truncate">${escapeHtml(act.subject_code)}: ${escapeHtml(act.title)}</span>
+                                <span class="badge bg-success fs-6 flex-shrink-0">${Number(act.marks)} / ${Number(act.max_marks)}</span>
+                            </div>
+                            <div class="small text-muted mb-2">Faculty: ${escapeHtml(act.faculty_name)}</div>
+                            <div class="small text-dark bg-white p-2 rounded border">
+                                <i class="bi bi-chat-quote-fill text-primary me-1"></i>
+                                <em>"${escapeHtml(act.feedback || 'Evaluated')}"</em>
+                            </div>
+                        </div>`).join('');
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('student');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+            EPAP_SHELL.init({ role: 'student', onRefresh: loadStudentDashboard });
+        });
+    </script>
+</body>
+</html>

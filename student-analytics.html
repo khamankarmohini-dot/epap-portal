@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Academic &amp; Predictive Analytics | EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Unified Top Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn" aria-label="Toggle navigation menu"><i class="bi bi-list fs-5"></i></button>
+
+        <div class="d-flex align-items-center min-w-0">
+            <div class="brand-badge me-2 me-md-3 flex-shrink-0">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block text-truncate">
+                <h6 class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.92rem;" data-setting="institution_name">Academic Portal</h6>
+                <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;"><span data-setting="department_name">Department</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <span class="portal-tag portal-tag-student d-none d-md-inline-block">Student Portal</span>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-muted small ms-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><a class="dropdown-item small" href="student-dashboard.html"><i class="bi bi-grid-1x2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-person me-2"></i>Profile &amp; Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar" id="appSidebar" aria-label="Student navigation">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Academic Session</div>
+                <div class="fw-bold text-white small" id="sidebarSessionText">Loading...</div>
+                <div class="badge bg-primary bg-opacity-25 text-white mt-1" id="sidebarClassBadge" style="font-size: 0.7rem;">—</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Academic Main</li>
+                <li><a href="student-dashboard.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                <li><a href="student-activities.html" class="nav-link"><i class="bi bi-card-checklist"></i><span>My Activities</span><span class="badge bg-warning text-dark d-none" id="sidebarPendingBadge"></span></a></li>
+                <li><a href="student-results.html" class="nav-link"><i class="bi bi-file-earmark-spreadsheet"></i><span>Semester Results</span></a></li>
+
+                <li class="nav-header">Analytics &amp; Skills</li>
+                <li><a href="student-analytics.html" class="nav-link active"><i class="bi bi-graph-up-arrow"></i><span>Predictive Analytics</span></a></li>
+                <li><a href="student-practice.html" class="nav-link"><i class="bi bi-code-square"></i><span>LeetCode Practice</span><span class="badge bg-success d-none" id="sidebarPracticeBadge"></span></a></li>
+
+                <li class="nav-header">Account</li>
+                <li><a href="profile.html" class="nav-link"><i class="bi bi-person-gear"></i><span>Profile &amp; Password</span></a></li>
+                <li><a href="login.html" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i><span>Sign Out</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="mb-4">
+                <span class="badge bg-primary text-white mb-2">EPAP Intelligence Engine</span>
+                <h4 class="fw-bold text-dark mb-1">Explainable Predictive Academic Analytics</h4>
+                <p class="text-muted small mb-0">Transparent statistical forecasting derived from historical transcripts, continuous internal evaluation, and assignment timeliness.</p>
+            </div>
+
+            <!-- Predictive Forecast Highlight Box -->
+            <div class="prediction-box mb-4 shadow-sm">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                            <span class="badge bg-success text-white px-2 py-1"><i class="bi bi-cpu-fill me-1"></i>Statistical Model</span>
+                            <span class="small text-muted" id="datasetSummaryText">Loading dataset summary...</span>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-1" id="predHeading">Computing forecast...</h4>
+                        <p class="small text-dark mb-0" id="predDesc">Analyzing your published semester history and activity submission timeliness...</p>
+                        <div class="prediction-disclaimer">
+                            <strong>Transparent Limitation Notice:</strong> This forecast is an explainable statistical estimate calculated via weighted multi-factor regression. It does not replace official university evaluation rules.
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center mt-3 mt-lg-0 border-start-lg ps-lg-4">
+                        <div class="p-3 bg-white rounded-3 border">
+                            <div class="small text-muted mb-1">Forecast Confidence Score</div>
+                            <div class="display-6 fw-bold text-primary" id="predConfidence">—</div>
+                            <span class="badge bg-info-subtle text-info mt-1" id="predReliabilityBadge">Evaluating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="card card-academic border-0 shadow-sm p-3 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Historical Progression &amp; Next-Semester Projection</h6>
+                                <small class="text-muted">Published Transcripts vs Predictive Forecast</small>
+                            </div>
+                        </div>
+                        <div style="height: 300px;">
+                            <canvas id="predictiveForecastChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card card-academic border-0 shadow-sm p-3 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0"><i class="bi bi-pie-chart text-warning me-2"></i>Submission Timeliness</h6>
+                                <small class="text-muted">All Assigned Activities</small>
+                            </div>
+                        </div>
+                        <div style="height: 240px;">
+                            <canvas id="submissionTimelinessChart"></canvas>
+                        </div>
+                        <div class="text-center small text-muted mt-2" id="timelinessSummary">
+                            Calculating completion rate...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology & Recommendations Row -->
+            <div class="row g-4">
+
+                <div class="col-lg-6">
+                    <div class="card card-academic border-0 shadow-sm p-4 h-100">
+                        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-calculator text-primary me-2"></i>Documented Mathematical Model</h6>
+                        <p class="small text-muted">
+                            The predictive engine applies weighted multi-factor regression over your published grades and continuous assessment activity:
+                        </p>
+                        <div class="p-3 bg-light rounded font-monospace small mb-3 border">
+                            Forecast SGPA = (0.60 &times; Past_CGPA) + (0.25 &times; Normalized_InSem) + (0.15 &times; Timely_Activity_Rate)
+                        </div>
+                        <ul class="small text-muted mb-0 ps-3" id="modelFactorsList">
+                            <li class="mb-2">Waiting for enough data to compute factor contributions...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card card-academic border-0 shadow-sm p-4 h-100" id="recommendationsCard">
+                        <h6 class="fw-bold text-dark mb-3"><i class="bi bi-lightbulb text-warning me-2"></i>Actionable Academic Recommendations</h6>
+                        <div class="text-muted small">Loading personalized recommendations...</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">Academic Institution</strong> &bull; <span data-setting="department_name">Department</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination &amp; Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script src="assets/js/analytics.js"></script>
+    <script>
+        async function loadStudentAnalytics() {
+            const res = await EPAP_API.epapFetch('/api/student/analytics');
+            const data = await res.json();
+            const pred = data.prediction || {};
+            const time = data.timeliness || {};
+            const semesters = data.semesters || [];
+
+            renderPredictiveForecastChart('predictiveForecastChart', semesters, pred);
+            renderSubmissionTimelinessChart('submissionTimelinessChart', time);
+
+            const dsEl = document.getElementById('datasetSummaryText');
+            if (dsEl) {
+                dsEl.textContent = `Dataset: ${semesters.length} Published Semester${semesters.length === 1 ? '' : 's'} + Activity Records`;
+            }
+
+            const predHeading = document.getElementById('predHeading');
+            const predDesc = document.getElementById('predDesc');
+            const confEl = document.getElementById('predConfidence');
+            const confBadge = document.getElementById('predReliabilityBadge');
+            const factorsList = document.getElementById('modelFactorsList');
+
+            if (pred.enough_data) {
+                predHeading.innerHTML = `Projected Semester ${Number(pred.next_semester)} SGPA: <span class="text-success">${Number(pred.predicted_sgpa).toFixed(2)} &plusmn; ${Number(pred.margin).toFixed(2)}</span>`;
+                predDesc.textContent = `Based on ${semesters.length} published semester${semesters.length === 1 ? '' : 's'} and ${time.timely_rate || 0}% on-time activity completion, your trajectory aligns with ${pred.classification}.`;
+                confEl.textContent = `${pred.confidence}%`;
+                confBadge.textContent = pred.confidence >= 85 ? 'High Model Reliability' : 'Moderate Reliability';
+
+                if (factorsList && Array.isArray(pred.factors)) {
+                    factorsList.innerHTML = pred.factors.map(f =>
+                        `<li class="mb-2"><strong>${escapeHtml(f.name)} (${Math.round(f.weight * 100)}%):</strong> Input = <code>${escapeHtml(f.value)}</code> &rarr; Contribution: <strong>${escapeHtml(f.contribution)}</strong></li>`
+                    ).join('');
+                }
+            } else {
+                predHeading.innerHTML = 'Predictive Forecast: <span class="text-muted">Not Enough Data Yet</span>';
+                predDesc.textContent = 'At least 2 published semesters of examination records are required to generate an explainable SGPA forecast.';
+                confEl.textContent = '—';
+                confBadge.textContent = 'Insufficient History';
+                if (factorsList) {
+                    factorsList.innerHTML = '<li>Publish at least 2 semesters of marks to inspect regression factor contributions.</li>';
+                }
+            }
+
+            const timelySummary = document.getElementById('timelinessSummary');
+            if (timelySummary) {
+                const totalActs = (time.on_time || 0) + (time.late || 0) + (time.pending || 0);
+                timelySummary.innerHTML = totalActs > 0
+                    ? `<strong>${time.timely_rate || 0}% On-Time Completion Rate</strong> (${time.on_time || 0} of ${totalActs} activities)`
+                    : 'No activity submissions recorded yet.';
+            }
+
+            const recContainer = document.getElementById('recommendationsCard');
+            if (recContainer) {
+                if (pred.recommendations && pred.recommendations.length > 0) {
+                    const itemsHtml = pred.recommendations.map(r => `
+                        <div class="d-flex gap-3 mb-3">
+                            <div class="stat-icon ${r.type === 'strength' ? 'bg-success text-success' : 'bg-warning text-warning'} bg-opacity-10 p-3 rounded flex-shrink-0" style="width: 44px; height: 44px;">
+                                <i class="bi ${r.type === 'strength' ? 'bi-check-lg' : 'bi-exclamation-triangle'} fs-5"></i>
+                            </div>
+                            <div>
+                                <strong class="small text-dark d-block">${escapeHtml(r.title)}</strong>
+                                <span class="small text-muted">${escapeHtml(r.detail)}</span>
+                            </div>
+                        </div>`).join('');
+                    recContainer.innerHTML = `<h6 class="fw-bold text-dark mb-3"><i class="bi bi-lightbulb text-warning me-2"></i>Actionable Academic Recommendations</h6>${itemsHtml}`;
+                } else {
+                    recContainer.innerHTML = `<h6 class="fw-bold text-dark mb-3"><i class="bi bi-lightbulb text-warning me-2"></i>Actionable Academic Recommendations</h6><div class="text-muted small">Not enough graded data yet to generate personalized recommendations.</div>`;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('student');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+            EPAP_SHELL.init({ role: 'student', onRefresh: loadStudentAnalytics });
+        });
+    </script>
+</body>
+</html>

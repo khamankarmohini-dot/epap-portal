@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Semester Results &amp; Marks | EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        @media print {
+            .app-sidebar, .zeal-topbar, .btn-print, .no-print {
+                display: none !important;
+            }
+            .main-content {
+                padding: 0 !important;
+            }
+            body {
+                background: #ffffff !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Unified Top Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4 no-print">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn" aria-label="Toggle navigation menu"><i class="bi bi-list fs-5"></i></button>
+
+        <div class="d-flex align-items-center min-w-0">
+            <div class="brand-badge me-2 me-md-3 flex-shrink-0">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block text-truncate">
+                <h6 class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.92rem;" data-setting="institution_name">Academic Portal</h6>
+                <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;"><span data-setting="department_name">Department</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <span class="portal-tag portal-tag-student d-none d-md-inline-block">Student Portal</span>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-muted small ms-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><a class="dropdown-item small" href="student-dashboard.html"><i class="bi bi-grid-1x2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-person me-2"></i>Profile &amp; Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar no-print" id="appSidebar" aria-label="Student navigation">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Academic Session</div>
+                <div class="fw-bold text-white small" id="sidebarSessionText">Loading...</div>
+                <div class="badge bg-primary bg-opacity-25 text-white mt-1" id="sidebarClassBadge" style="font-size: 0.7rem;">—</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Academic Main</li>
+                <li><a href="student-dashboard.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                <li><a href="student-activities.html" class="nav-link"><i class="bi bi-card-checklist"></i><span>My Activities</span><span class="badge bg-warning text-dark d-none" id="sidebarPendingBadge"></span></a></li>
+                <li><a href="student-results.html" class="nav-link active"><i class="bi bi-file-earmark-spreadsheet"></i><span>Semester Results</span></a></li>
+
+                <li class="nav-header">Analytics &amp; Skills</li>
+                <li><a href="student-analytics.html" class="nav-link"><i class="bi bi-graph-up-arrow"></i><span>Predictive Analytics</span></a></li>
+                <li><a href="student-practice.html" class="nav-link"><i class="bi bi-code-square"></i><span>LeetCode Practice</span><span class="badge bg-success d-none" id="sidebarPracticeBadge"></span></a></li>
+
+                <li class="nav-header">Account</li>
+                <li><a href="profile.html" class="nav-link"><i class="bi bi-person-gear"></i><span>Profile &amp; Password</span></a></li>
+                <li><a href="login.html" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i><span>Sign Out</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 no-print gap-2">
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">Examination Results &amp; Academic Performance</h4>
+                    <p class="text-muted small mb-0">Published Examination Records &amp; Internal Assessments</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button onclick="window.print()" class="btn btn-outline-secondary btn-sm btn-print">
+                        <i class="bi bi-printer me-1"></i>Print Marksheet
+                    </button>
+                    <select class="form-select form-select-sm" id="semesterSelect" aria-label="Select semester" style="min-width: 180px;">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grade Card Header -->
+            <div class="card card-academic border-0 shadow-sm p-4 mb-4">
+                <div class="row align-items-center border-bottom pb-3 mb-3">
+                    <div class="col-md-2 text-center text-md-start mb-2 mb-md-0">
+                        <div class="brand-badge p-3 fs-3">
+                            <i class="bi bi-mortarboard-fill"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-7 text-center text-md-start">
+                        <h5 class="fw-bold text-dark mb-0" data-setting="institution_name">Academic Institution</h5>
+                        <div class="text-muted small" data-setting="department_name">Department</div>
+                        <div class="fw-bold text-primary small mt-1" id="marksheetProgramHeading">STATEMENT OF MARKS &amp; GRADES</div>
+                    </div>
+                    <div class="col-md-3 text-center text-md-end">
+                        <span class="badge bg-secondary-subtle text-secondary fs-6 border px-3 py-2" id="resultOverallBadge">
+                            <i class="bi bi-hourglass-split me-1"></i>Loading...
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Student Metadata Grid -->
+                <div class="row g-3 small mb-4" id="studentMetaGrid">
+                    <div class="col-sm-6 col-md-3">
+                        <span class="text-muted d-block">Student Name:</span>
+                        <strong class="text-dark" id="metaStudentName">—</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <span class="text-muted d-block">PRN (ZPRN):</span>
+                        <strong class="font-monospace text-dark" id="metaZprn">—</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <span class="text-muted d-block">Seat Number:</span>
+                        <strong class="font-monospace text-dark" id="metaSeatNo">—</strong>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <span class="text-muted d-block">Academic Year &amp; Sem:</span>
+                        <strong class="text-dark" id="metaYearSem">—</strong>
+                    </div>
+                </div>
+
+                <!-- Performance Summary Widgets -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <span class="text-muted small d-block">Earned Credits</span>
+                            <span class="fs-4 fw-bold text-dark" id="resEarnedCredits">—</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <span class="text-muted small d-block">Semester SGPA</span>
+                            <span class="fs-4 fw-bold text-primary" id="resSemSgpa">—</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <span class="text-muted small d-block">Cumulative CGPA</span>
+                            <span class="fs-4 fw-bold text-success" id="resCgpa">—</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="p-3 bg-light rounded text-center border">
+                            <span class="text-muted small d-block">Overall Classification</span>
+                            <span class="fs-5 fw-bold text-indigo" id="resClass" style="color: var(--zeal-indigo);">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Marks Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle mb-0">
+                        <thead class="table-light text-uppercase small text-muted">
+                            <tr>
+                                <th style="width: 100px;">Course Code</th>
+                                <th>Subject Course Title</th>
+                                <th class="text-center" style="width: 90px;">In-Sem</th>
+                                <th class="text-center" style="width: 90px;">End-Sem</th>
+                                <th class="text-center" style="width: 90px;">TW/OR</th>
+                                <th class="text-center" style="width: 90px;">Total</th>
+                                <th class="text-center" style="width: 80px;">Grade</th>
+                                <th class="text-center" style="width: 70px;">GP</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small" id="marksTableBody">
+                            <tr><td colspan="8" class="text-center text-muted py-4">Loading examination results...</td></tr>
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr id="marksTableFoot">
+                                <th colspan="8" class="text-center text-muted">—</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="row mt-4 pt-3 border-top text-muted small align-items-center">
+                    <div class="col-md-6">
+                        Published by: <strong data-setting="department_name">Department</strong> &bull; Verified via EPAP
+                    </div>
+                    <div class="col-md-6 text-md-end" id="resultPublishedDate">
+                        Only published results are displayed.
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer no-print">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">Academic Institution</strong> &bull; <span data-setting="department_name">Department</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination &amp; Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script>
+        let allMarks = [];
+        let studentProfile = null;
+        let currentSummary = null;
+
+        async function loadResults(summary) {
+            currentSummary = summary;
+            const [profRes, resRes] = await Promise.all([
+                EPAP_API.epapFetch('/api/student/profile'),
+                EPAP_API.epapFetch('/api/student/results')
+            ]);
+            studentProfile = await profRes.json();
+            allMarks = await resRes.json();
+
+            document.getElementById('metaStudentName').textContent = (studentProfile.full_name || '').toUpperCase();
+            document.getElementById('metaZprn').textContent = studentProfile.zprn || '';
+            document.getElementById('metaSeatNo').textContent = studentProfile.seat_number || 'Pending';
+            const acadYear = summary?.session?.academic_year || '';
+            document.getElementById('metaYearSem').textContent = `${acadYear} • SEMESTER ${studentProfile.semester}`;
+            document.getElementById('marksheetProgramHeading').textContent =
+                `STATEMENT OF MARKS & GRADES • ${studentProfile.year || ''} (${summary?.department_name || ''})`;
+
+            const semSelect = document.getElementById('semesterSelect');
+            const semesters = [...new Set(allMarks.map(m => Number(m.semester)))].sort((a, b) => b - a);
+            const prevSelected = semSelect.value ? Number(semSelect.value) : null;
+
+            if (semSelect) {
+                if (semesters.length === 0) {
+                    semSelect.innerHTML = '<option value="">No Published Results</option>';
+                } else {
+                    const targetSem = (prevSelected && semesters.includes(prevSelected)) ? prevSelected : semesters[0];
+                    semSelect.innerHTML = semesters.map(s => {
+                        const sample = allMarks.find(m => Number(m.semester) === s);
+                        return `<option value="${s}" ${s === targetSem ? 'selected' : ''}>Semester ${s} (SGPA: ${Number(sample.sgpa).toFixed(2)})</option>`;
+                    }).join('');
+                }
+            }
+
+            const selectedSem = semSelect && semSelect.value ? Number(semSelect.value) : (semesters[0] || null);
+            renderSemesterMarks(selectedSem);
+        }
+
+        function renderSemesterMarks(semester) {
+            const tbody = document.getElementById('marksTableBody');
+            const tfoot = document.getElementById('marksTableFoot');
+            const overallBadge = document.getElementById('resultOverallBadge');
+            const pubDateEl = document.getElementById('resultPublishedDate');
+
+            const marks = semester ? allMarks.filter(m => Number(m.semester) === semester) : [];
+            if (marks.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4">No published examination results available yet.</td></tr>';
+                tfoot.innerHTML = '<th colspan="8" class="text-center text-muted">Awaiting HOD Result Publication</th>';
+                document.getElementById('resEarnedCredits').textContent = '—';
+                document.getElementById('resSemSgpa').textContent = '—';
+                document.getElementById('resCgpa').textContent = studentProfile ? Number(studentProfile.cgpa || 0).toFixed(2) : '—';
+                document.getElementById('resClass').textContent = '—';
+                overallBadge.className = 'badge bg-secondary-subtle text-secondary fs-6 border px-3 py-2';
+                overallBadge.innerHTML = '<i class="bi bi-clock me-1"></i>PENDING';
+                return;
+            }
+
+            let grandTotal = 0;
+            let maxTotal = 0;
+            let earnedCredits = 0;
+            let totalCredits = 0;
+            let allPassed = true;
+
+            tbody.innerHTML = marks.map(m => {
+                const total = Number(m.total_marks ?? ((m.in_sem || 0) + (m.end_sem || 0) + (m.practical || 0)));
+                const maxM = Number(m.max_marks || ((Number(m.max_in_sem) || 0) + (Number(m.max_end_sem) || 0) + (Number(m.max_practical) || 0)) || 150);
+                grandTotal += total;
+                maxTotal += maxM;
+                const cred = Number(m.credits || 4);
+                totalCredits += cred;
+                if (Number(m.passed) === 1) earnedCredits += cred;
+                else allPassed = false;
+
+                const grade = m.grade || 'P';
+                const badgeClass = grade === 'O' ? 'bg-success' : grade === 'A+' ? 'bg-primary' : grade === 'F' ? 'bg-danger' : 'bg-info text-dark';
+                return `
+                <tr>
+                    <td class="font-monospace fw-bold">${escapeHtml(m.code)}</td>
+                    <td>${escapeHtml(m.name)}</td>
+                    <td class="text-center fw-bold">${Number(m.in_sem ?? 0)}</td>
+                    <td class="text-center fw-bold">${Number(m.end_sem ?? 0)}</td>
+                    <td class="text-center fw-bold">${Number(m.max_practical) > 0 ? Number(m.practical ?? 0) : '—'}</td>
+                    <td class="text-center fw-bold text-primary">${total} / ${maxM}</td>
+                    <td class="text-center"><span class="badge ${badgeClass}">${escapeHtml(grade)}</span></td>
+                    <td class="text-center fw-bold">${Number(m.grade_points || 0)}</td>
+                </tr>`;
+            }).join('');
+
+            const semSgpa = Number(marks[0].sgpa || studentProfile.current_sgpa || 0).toFixed(2);
+            const cgpa = Number(studentProfile.cgpa || 0).toFixed(2);
+            const pct = maxTotal ? ((grandTotal / maxTotal) * 100).toFixed(1) : '0.0';
+
+            document.getElementById('resEarnedCredits').textContent = `${earnedCredits} / ${totalCredits}`;
+            document.getElementById('resSemSgpa').textContent = semSgpa;
+            document.getElementById('resCgpa').textContent = cgpa;
+            document.getElementById('resClass').textContent = Number(cgpa) >= 7.75 ? 'Distinction' : Number(cgpa) >= 6.75 ? 'First Class' : Number(cgpa) >= 5.5 ? 'Second Class' : 'Pass';
+
+            overallBadge.className = allPassed
+                ? 'badge bg-success-subtle text-success fs-6 border border-success border-opacity-25 px-3 py-2'
+                : 'badge bg-danger-subtle text-danger fs-6 border border-danger border-opacity-25 px-3 py-2';
+            overallBadge.innerHTML = allPassed
+                ? '<i class="bi bi-check2-all me-1"></i>RESULT: PASS'
+                : '<i class="bi bi-exclamation-circle me-1"></i>RESULT: ATKT';
+
+            if (marks[0].published_at && pubDateEl) {
+                const pubStr = new Date(marks[0].published_at).toLocaleDateString('en-IN', { dateStyle: 'long' });
+                pubDateEl.innerHTML = `Published on: <strong>${escapeHtml(pubStr)}</strong>`;
+            }
+
+            tfoot.innerHTML = `
+                <th colspan="5" class="text-end">Semester ${semester} Summary:</th>
+                <th class="text-center fw-bold text-success">${grandTotal} / ${maxTotal} (${pct}%)</th>
+                <th class="text-center fw-bold text-primary">SGPA: ${semSgpa}</th>
+                <th class="text-center fw-bold ${allPassed ? 'text-success' : 'text-danger'}">${allPassed ? 'PASS' : 'ATKT'}</th>`;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('student');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+            const semSelect = document.getElementById('semesterSelect');
+            if (semSelect) {
+                semSelect.addEventListener('change', () => renderSemesterMarks(Number(semSelect.value)));
+            }
+            EPAP_SHELL.init({ role: 'student', onRefresh: loadResults });
+        });
+    </script>
+</body>
+</html>

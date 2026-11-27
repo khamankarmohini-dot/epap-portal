@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Academic Administration &amp; Allocations | HOD Portal | EPAP</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Unified Top Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn"><i class="bi bi-list fs-5"></i></button>
+
+        <div class="d-flex align-items-center">
+            <div class="brand-badge me-2 me-md-3">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block">
+                <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.92rem;" data-setting="institution_name">EPAP Academic Portal</h6>
+                <small class="text-muted" style="font-size: 0.75rem;"><span data-setting="department_name">Department Portal</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-3">
+            <span class="portal-tag portal-tag-admin d-none d-md-inline-block">HOD & Admin Portal</span>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><a class="dropdown-item small" href="admin-dashboard.html"><i class="bi bi-grid-1x2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Administrative Role</div>
+                <div class="fw-bold text-white small">Head of Department (HOD)</div>
+                <div class="badge bg-danger text-white mt-1" style="font-size: 0.7rem;" data-setting="department_name">Department Portal</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Governance</li>
+                <li><a href="admin-dashboard.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>HOD Dashboard</span></a></li>
+                <li><a href="admin-management.html" class="nav-link active"><i class="bi bi-diagram-3-fill"></i><span>Faculty Allocations</span></a></li>
+                <li><a href="#users-section" class="nav-link"><i class="bi bi-people-fill"></i><span>Users &amp; Onboarding</span></a></li>
+                <li><a href="#bulk-import-section" class="nav-link"><i class="bi bi-upload"></i><span>Bulk CSV Import</span></a></li>
+                <li><a href="#results-publishing-section" class="nav-link"><i class="bi bi-award-fill"></i><span>Exam Moderation</span></a></li>
+                <li><a href="#settings-section" class="nav-link"><i class="bi bi-gear-fill"></i><span>Portal Settings</span></a></li>
+
+                <li class="nav-header">Account</li>
+                <li><a href="login.html" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i><span>Sign Out</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">Academic Allocations &amp; Management Console</h4>
+                    <p class="text-muted small mb-0">Add subjects, faculty, students, allocations, exam sessions, and portal settings</p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSubjectModal"><i class="bi bi-book me-1"></i>Add Subject</button>
+                    <button class="btn btn-outline-warning text-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addFacultyModal"><i class="bi bi-person-workspace me-1"></i>Add Faculty</button>
+                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#addStudentModal"><i class="bi bi-person-plus me-1"></i>Add Student</button>
+                </div>
+            </div>
+
+            <!-- SECTION 1: Faculty Subject Allocation Matrix -->
+            <div class="card card-academic border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-diagram-3 text-primary me-2"></i>Faculty Course & Division Allocation Matrix</h6>
+                        <small class="text-muted">Empowers assigned teachers to create activities and award continuous assessment marks</small>
+                    </div>
+                    <button class="btn btn-primary btn-sm" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);" data-bs-toggle="modal" data-bs-target="#allocateModal">
+                        <i class="bi bi-plus-lg me-1"></i>New Allocation
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-muted text-uppercase">
+                            <tr>
+                                <th>Faculty Name & ID</th>
+                                <th>Subject Code & Title</th>
+                                <th>Class & Division</th>
+                                <th>Assigned Students</th>
+                                <th>Status</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            <tr><td colspan="6" class="text-center text-muted py-4">Loading allocations...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Bulk CSV Import -->
+            <div class="card card-academic border-0 shadow-sm mb-4" id="bulk-import-section">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-file-earmark-spreadsheet text-success me-2"></i>Bulk Student Enrollment (CSV Import)</h6>
+                    <small class="text-muted">Generates a unique strong temporary password per student and forces password change on first login</small>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <div class="p-4 border-2 border-dashed rounded-3 text-center bg-light">
+                                <i class="bi bi-cloud-arrow-up-fill text-primary" style="font-size: 3rem;"></i>
+                                <h6 class="fw-bold mt-2">Drag and drop student CSV file here</h6>
+                                <p class="small text-muted mb-3">Ensure columns: <code>ZPRN, FullName, Email, Year, Division, RollNo</code></p>
+                                <input type="file" class="d-none" id="csvFileInput">
+                                <button type="button" class="btn btn-primary btn-sm px-4 fw-medium" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);" onclick="document.getElementById('csvFileInput').click()">
+                                    Browse Computer
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 mt-3 mt-lg-0 border-start-lg ps-lg-4">
+                            <h6 class="fw-bold small text-dark mb-2">Import Requirements & Validation Rules:</h6>
+                            <ul class="small text-muted ps-3 mb-3">
+                                <li>Duplicate IDs or emails will be flagged and safely bypassed.</li>
+                                <li>A strong temporary password is generated once per created account.</li>
+                                <li>Mandatory password reset triggered upon first successful login.</li>
+                                <li>Registered email is used for 2-step OTP dispatch.</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-secondary btn-sm w-100">
+                                <i class="bi bi-download me-1"></i>Download Sample CSV Template
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Examination Results Publishing -->
+            <div class="card card-academic border-0 shadow-sm mb-4" id="results-publishing-section">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-award text-warning me-2"></i>Semester Examination Result Moderation &amp; Release</h6>
+                        <small class="text-muted">Control student visibility of In-Sem and End-Sem university examination marks</small>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addExamModal"><i class="bi bi-plus-lg me-1"></i>New Exam Session</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-muted text-uppercase">
+                            <tr>
+                                <th>Exam Name & Session</th>
+                                <th>Total Candidates</th>
+                                <th>Pass Percentage</th>
+                                <th>Publishing Status</th>
+                                <th class="text-end">HOD Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            <tr><td colspan="5" class="text-center text-muted py-4">Loading exam sessions...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Users Management (Reset Password & Edit Email) -->
+            <div class="card card-academic border-0 shadow-sm mb-4" id="users-section">
+                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-people-fill text-primary me-2"></i>Students &amp; Faculty Directory</h6>
+                        <small class="text-muted">Issue temporary password resets or update verified email addresses</small>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-muted text-uppercase">
+                            <tr><th>Portal ID</th><th>Full Name</th><th>Role</th><th>Email</th><th class="text-end">Actions</th></tr>
+                        </thead>
+                        <tbody id="usersDirectoryBody" class="small">
+                            <tr><td colspan="5" class="text-center text-muted py-4">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Portal Settings -->
+            <div class="card card-academic border-0 shadow-sm mb-4" id="settings-section">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-gear-fill text-secondary me-2"></i>Portal Settings</h6>
+                    <small class="text-muted">Configure institution branding, academic term, session timeout, upload limit, and thresholds</small>
+                </div>
+                <div class="card-body p-4">
+                    <form id="settingsForm" onsubmit="saveSettings(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Institution Name</label>
+                                <input type="text" name="institution_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Department Name</label>
+                                <input type="text" name="department_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">Short Logo Text</label>
+                                <input type="text" name="short_logo_text" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">Academic Year</label>
+                                <input type="text" name="academic_year" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">Current Semester</label>
+                                <input type="number" name="current_semester" class="form-control" min="1" max="8" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Support Contact Email</label>
+                                <input type="email" name="support_email" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">Session Timeout (seconds)</label>
+                                <input type="number" name="session_timeout_seconds" class="form-control" min="300" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">Max Upload Size (MB)</label>
+                                <input type="number" name="upload_max_mb" class="form-control" min="1" max="100" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">At-Risk SGPA Threshold</label>
+                                <input type="number" step="0.1" name="at_risk_sgpa_threshold" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">At-Risk Timeliness (%)</label>
+                                <input type="number" name="at_risk_timely_threshold" class="form-control" min="0" max="100" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Department Benchmark Label</label>
+                                <input type="text" name="benchmark_label" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Curriculum Label</label>
+                                <input type="text" name="curriculum_label" class="form-control" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mt-3 px-4">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Allocate Modal -->
+    <div class="modal fade" id="allocateModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light">
+                    <h6 class="modal-title fw-bold text-dark">Assign Faculty to Subject</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="handleAllocation(event)">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Select Faculty Member</label>
+                            <select class="form-select" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Select Subject</label>
+                            <select class="form-select" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Select Class & Division</label>
+                            <select class="form-select" required>
+                                <option selected>Third Year (TE-IT) - Division A</option>
+                                <option>Third Year (TE-IT) - Division B</option>
+                                <option>Second Year (SE-IT) - Division A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-sm px-4 fw-medium" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);">Save Allocation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Subject Modal -->
+    <div class="modal fade" id="addSubjectModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-light"><h6 class="modal-title fw-bold">Add Subject</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <form onsubmit="handleAddSubject(event)">
+            <div class="modal-body p-4">
+                <div class="mb-2"><label class="form-label small fw-bold">Subject Code</label><input name="code" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Subject Name</label><input name="name" class="form-control" required></div>
+                <div class="row g-2">
+                    <div class="col-6"><label class="form-label small fw-bold">Semester</label><input name="semester" type="number" class="form-control" value="5" min="1" max="8" required></div>
+                    <div class="col-6"><label class="form-label small fw-bold">Credits</label><input name="credits" type="number" class="form-control" value="4" min="1" max="10" required></div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light"><button type="submit" class="btn btn-primary btn-sm">Create Subject</button></div>
+        </form>
+    </div></div></div>
+
+    <!-- Add Faculty Modal -->
+    <div class="modal fade" id="addFacultyModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-light"><h6 class="modal-title fw-bold">Add Faculty</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <form onsubmit="handleAddFaculty(event)">
+            <div class="modal-body p-4">
+                <div class="mb-2"><label class="form-label small fw-bold">Faculty ID</label><input name="faculty_id" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Full Name</label><input name="full_name" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Email</label><input name="email" type="email" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Designation</label><input name="designation" class="form-control" value="Assistant Professor"></div>
+            </div>
+            <div class="modal-footer bg-light"><button type="submit" class="btn btn-warning btn-sm text-dark fw-bold">Create Faculty</button></div>
+        </form>
+    </div></div></div>
+
+    <!-- Add Student Modal -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-light"><h6 class="modal-title fw-bold">Add Student</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <form onsubmit="handleAddStudent(event)">
+            <div class="modal-body p-4">
+                <div class="mb-2"><label class="form-label small fw-bold">Student ID / PRN</label><input name="zprn" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Full Name</label><input name="full_name" class="form-control" required></div>
+                <div class="mb-2"><label class="form-label small fw-bold">Email</label><input name="email" type="email" class="form-control" required></div>
+                <div class="row g-2">
+                    <div class="col-3"><label class="form-label small fw-bold">Year</label><select name="year" id="addStuYear" class="form-select"><option>TE-IT</option><option>SE-IT</option><option>BE-IT</option><option>FE-IT</option></select></div>
+                    <div class="col-3"><label class="form-label small fw-bold">Semester</label><input name="semester" id="addStuSem" type="number" class="form-control" value="5" min="1" max="8" required></div>
+                    <div class="col-3"><label class="form-label small fw-bold">Division</label><select name="division" class="form-select"><option>A</option><option>B</option><option>C</option></select></div>
+                    <div class="col-3"><label class="form-label small fw-bold">Roll No</label><input name="roll_no" type="number" class="form-control" value="1"></div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light"><button type="submit" class="btn btn-success btn-sm">Create Student</button></div>
+        </form>
+    </div></div></div>
+
+    <!-- Add Exam Modal -->
+    <div class="modal fade" id="addExamModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-light"><h6 class="modal-title fw-bold">New Exam Session</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+        <form onsubmit="handleAddExam(event)">
+            <div class="modal-body p-4">
+                <div class="mb-2"><label class="form-label small fw-bold">Exam Name</label><input name="exam_name" class="form-control" required></div>
+                <div class="row g-2">
+                    <div class="col-4"><label class="form-label small fw-bold">Year</label><select name="year" class="form-select"><option>TE-IT</option><option>SE-IT</option><option>BE-IT</option></select></div>
+                    <div class="col-4"><label class="form-label small fw-bold">Semester</label><input name="semester" type="number" class="form-control" value="5" min="1" max="8" required></div>
+                    <div class="col-4"><label class="form-label small fw-bold">Type</label><select name="exam_type" class="form-select"><option value="combined">Combined</option><option value="in_sem">In-Sem</option><option value="end_sem">End-Sem</option></select></div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light"><button type="submit" class="btn btn-primary btn-sm">Create Session</button></div>
+        </form>
+    </div></div></div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">EPAP Academic Portal</strong> &bull; <span data-setting="department_name">Department Portal</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination & Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script>
+        function showOneTimeSecretModal(title, message, secret) {
+            let modalEl = document.getElementById('epapSecretModal');
+            if (!modalEl) {
+                modalEl = document.createElement('div');
+                modalEl.id = 'epapSecretModal';
+                modalEl.className = 'modal fade';
+                modalEl.tabIndex = -1;
+                modalEl.innerHTML = `
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header bg-light py-2">
+                                <h6 class="modal-title fw-bold mb-0" id="epapSecretTitle"></h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body small">
+                                <p class="mb-2" id="epapSecretMsg"></p>
+                                <div class="p-2 bg-light border rounded font-monospace fw-bold text-center user-select-all" id="epapSecretVal"></div>
+                            </div>
+                            <div class="modal-footer bg-light py-2">
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Done</button>
+                            </div>
+                        </div>
+                    </div>`;
+                document.body.appendChild(modalEl);
+            }
+            document.getElementById('epapSecretTitle').textContent = title;
+            document.getElementById('epapSecretMsg').textContent = message;
+            document.getElementById('epapSecretVal').textContent = secret;
+            bootstrap.Modal.getOrCreateInstance(modalEl).show();
+        }
+
+        function showEditEmailModal(currentEmail) {
+            return new Promise((resolve) => {
+                let modalEl = document.getElementById('epapEditEmailModal');
+                if (!modalEl) {
+                    modalEl = document.createElement('div');
+                    modalEl.id = 'epapEditEmailModal';
+                    modalEl.className = 'modal fade';
+                    modalEl.tabIndex = -1;
+                    modalEl.innerHTML = `
+                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                            <div class="modal-content border-0 shadow">
+                                <div class="modal-header bg-light py-2">
+                                    <h6 class="modal-title fw-bold mb-0">Update Email Address</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form id="epapEditEmailForm">
+                                    <div class="modal-body small">
+                                        <label class="form-label fw-bold" for="epapEditEmailInput">New Email Address</label>
+                                        <input type="email" id="epapEditEmailInput" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="modal-footer bg-light py-2">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Update Email</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>`;
+                    document.body.appendChild(modalEl);
+                }
+                const inp = document.getElementById('epapEditEmailInput');
+                const form = document.getElementById('epapEditEmailForm');
+                inp.value = currentEmail;
+                let settled = false;
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                const onSubmit = (e) => {
+                    e.preventDefault();
+                    settled = true;
+                    cleanup();
+                    modal.hide();
+                    resolve(inp.value.trim());
+                };
+                const onHide = () => {
+                    if (!settled) {
+                        settled = true;
+                        cleanup();
+                        resolve(null);
+                    }
+                };
+                function cleanup() {
+                    form.removeEventListener('submit', onSubmit);
+                    modalEl.removeEventListener('hidden.bs.modal', onHide);
+                }
+                form.addEventListener('submit', onSubmit);
+                modalEl.addEventListener('hidden.bs.modal', onHide);
+                modal.show();
+            });
+        }
+
+        async function refreshAllAdminData() {
+            await Promise.all([loadAllocations(), loadModalOptions(), loadExams(), loadUsersDirectory(), loadSettings()]);
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('admin');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+
+            const yearSel = document.getElementById('addStuYear');
+            const semInp = document.getElementById('addStuSem');
+            if (yearSel && semInp) {
+                yearSel.addEventListener('change', () => {
+                    const map = { 'FE-IT': 1, 'SE-IT': 3, 'TE-IT': 5, 'BE-IT': 7 };
+                    semInp.value = map[yearSel.value] || 5;
+                });
+            }
+
+            // Wire Sample CSV template download
+            const tplLink = document.querySelector('#bulk-import-section a.btn-outline-secondary');
+            if (tplLink) {
+                tplLink.href = '/api/admin/students/template';
+            }
+
+            // Wire CSV file input & drag-and-drop
+            const csvInput = document.getElementById('csvFileInput');
+            const dropZone = document.querySelector('#bulk-import-section .border-dashed');
+            if (csvInput) {
+                csvInput.addEventListener('change', () => {
+                    if (csvInput.files && csvInput.files[0]) uploadStudentsCsv(csvInput.files[0]);
+                });
+            }
+            if (dropZone) {
+                dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-primary'); });
+                dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('border-primary'); });
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('border-primary');
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) uploadStudentsCsv(e.dataTransfer.files[0]);
+                });
+            }
+
+            EPAP_SHELL.init({ role: 'admin', onRefresh: refreshAllAdminData });
+        });
+
+        async function loadModalOptions() {
+            const [facRes, subRes] = await Promise.all([
+                EPAP_API.epapFetch('/api/admin/faculty'),
+                EPAP_API.epapFetch('/api/admin/subjects')
+            ]);
+            const faculty = await facRes.json();
+            const subjects = await subRes.json();
+            const selects = document.querySelectorAll('#allocateModal select');
+            if (selects[0] && Array.isArray(faculty)) {
+                selects[0].innerHTML = faculty.map(f => `<option value="${f.id}">${escapeHtml(f.full_name)} (${escapeHtml(f.faculty_id)})</option>`).join('');
+            }
+            if (selects[1] && Array.isArray(subjects)) {
+                selects[1].innerHTML = subjects.map(s => `<option value="${s.id}">${escapeHtml(s.code)} - ${escapeHtml(s.name)}</option>`).join('');
+            }
+            if (selects[2]) {
+                selects[2].innerHTML = `
+                    <option value="TE-IT|A">Third Year (TE-IT) - Division A</option>
+                    <option value="TE-IT|B">Third Year (TE-IT) - Division B</option>
+                    <option value="SE-IT|A">Second Year (SE-IT) - Division A</option>
+                    <option value="SE-IT|B">Second Year (SE-IT) - Division B</option>
+                    <option value="BE-IT|A">Final Year (BE-IT) - Division A</option>`;
+            }
+        }
+
+        async function loadAllocations() {
+            const res = await EPAP_API.epapFetch('/api/admin/allocations');
+            const rows = await res.json();
+            const tbody = document.querySelectorAll('table tbody')[0];
+            if (!tbody) return;
+            if (rows.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">No faculty allocations configured yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = rows.map(a => `
+                <tr>
+                    <td>
+                        <strong class="text-dark">${escapeHtml(a.faculty_name)}</strong>
+                        <div class="text-muted font-monospace" style="font-size: 0.72rem;">${escapeHtml(a.staff_code)}</div>
+                    </td>
+                    <td><span class="badge bg-primary-subtle text-primary fw-bold">${escapeHtml(a.subject_code)}</span> ${escapeHtml(a.subject_name)}</td>
+                    <td><strong>${escapeHtml(a.year)} &bull; Div ${escapeHtml(a.division)}</strong></td>
+                    <td>${Number(a.assigned_students || 0)} Students</td>
+                    <td><span class="badge ${a.status === 'active' ? 'bg-success' : 'bg-secondary'}">${escapeHtml(a.status)}</span></td>
+                    <td class="text-end">
+                        <button class="btn btn-outline-danger btn-sm py-1 px-2" style="font-size: 0.75rem;" onclick="deleteAllocation(${a.id})"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>`).join('');
+        }
+
+        async function handleAllocation(e) {
+            e.preventDefault();
+            const selects = e.target.querySelectorAll('select');
+            const faculty_id = Number(selects[0].value);
+            const subject_id = Number(selects[1].value);
+            const [year, division] = selects[2].value.split('|');
+
+            const res = await EPAP_API.epapFetch('/api/admin/allocations', {
+                method: 'POST',
+                body: JSON.stringify({ faculty_id, subject_id, year, division })
+            });
+            const data = await res.json();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('allocateModal'));
+            if (modal) modal.hide();
+
+            if (!res.ok) {
+                showToast(data.error || 'Failed to save allocation.', 'error');
+                return;
+            }
+            showToast('Faculty allocation saved!', 'success');
+            await loadAllocations();
+        }
+
+        async function deleteAllocation(id) {
+            const ok = await EPAP_UI.confirmDialog({
+                title: 'Remove Allocation',
+                message: 'Remove this faculty allocation?',
+                confirmText: 'Remove',
+                confirmClass: 'btn-danger'
+            });
+            if (!ok) return;
+            const res = await EPAP_API.epapFetch(`/api/admin/allocations/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('Allocation removed.', 'success');
+                await EPAP_SHELL.refreshNow(true);
+            }
+        }
+
+        async function uploadStudentsCsv(file) {
+            const fd = new FormData();
+            fd.append('file', file);
+            const res = await EPAP_API.epapFetch('/api/admin/students/import', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (!res.ok) {
+                showToast(data.error || 'CSV import failed.', 'error');
+                return;
+            }
+            showToast(`Imported: ${data.created} created, ${data.skipped} skipped, ${data.errors} errors.`, 'success');
+
+            let reportBox = document.getElementById('csvImportReport');
+            if (!reportBox) {
+                reportBox = document.createElement('div');
+                reportBox.id = 'csvImportReport';
+                reportBox.className = 'mt-3';
+                document.querySelector('#bulk-import-section .card-body').appendChild(reportBox);
+            }
+            const rowsHtml = (data.rows || []).map(r => `
+                <tr>
+                    <td>${r.row}</td>
+                    <td class="font-monospace">${escapeHtml(r.zprn)}</td>
+                    <td><span class="badge ${r.status === 'created' ? 'bg-success' : r.status === 'skipped' ? 'bg-warning text-dark' : 'bg-danger'}">${escapeHtml(r.status)}</span></td>
+                    <td>${escapeHtml(r.reason)}</td>
+                </tr>`).join('');
+            reportBox.innerHTML = `
+                <div class="alert alert-info py-2 small mb-2">
+                    <strong>Import Summary:</strong> Created: ${data.created}, Skipped: ${data.skipped}, Errors: ${data.errors}
+                </div>
+                <div class="table-responsive" style="max-height:220px;">
+                    <table class="table table-sm table-bordered small mb-0">
+                        <thead class="table-light"><tr><th>Row</th><th>ZPRN</th><th>Status</th><th>Detail</th></tr></thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+                </div>`;
+        }
+
+        async function loadExams() {
+            const res = await EPAP_API.epapFetch('/api/admin/exams');
+            const exams = await res.json();
+            const tbody = document.querySelector('#results-publishing-section table tbody');
+            if (!tbody) return;
+            if (exams.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No exam sessions found.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = exams.map(ex => {
+                const statusBadge = ex.status === 'published'
+                    ? '<span class="badge bg-success"><i class="bi bi-eye-fill me-1"></i>Published &amp; Live</span>'
+                    : ex.status === 'locked'
+                        ? '<span class="badge bg-secondary"><i class="bi bi-lock-fill me-1"></i>Locked</span>'
+                        : ex.status === 'under_moderation'
+                            ? '<span class="badge bg-warning text-dark"><i class="bi bi-shield-lock me-1"></i>Under Moderation</span>'
+                            : '<span class="badge bg-light text-dark border">Draft</span>';
+                const btnHtml = ex.status === 'published'
+                    ? `<button class="btn btn-outline-warning btn-sm py-1 px-3" onclick="setExamStatus(${ex.id}, 'locked')">Lock Results</button>`
+                    : `<button class="btn btn-success btn-sm py-1 px-3 fw-bold" onclick="setExamStatus(${ex.id}, 'published')">Publish to Students</button>`;
+                const passText = ex.pass_percentage !== null ? `${ex.pass_percentage}% Pass` : 'No marks yet';
+                return `
+                <tr>
+                    <td>
+                        <strong class="text-dark">${escapeHtml(ex.exam_name)}</strong>
+                        <div class="text-muted">Conducted: ${escapeHtml(ex.conducted_label || ex.academic_year)}</div>
+                    </td>
+                    <td>${Number(ex.candidates_count || 0)} Students</td>
+                    <td><span class="badge bg-info-subtle text-info">${escapeHtml(passText)}</span></td>
+                    <td>${statusBadge}</td>
+                    <td class="text-end">${btnHtml}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        async function setExamStatus(id, status) {
+            const res = await EPAP_API.epapFetch(`/api/admin/exams/${id}/status`, {
+                method: 'POST',
+                body: JSON.stringify({ status })
+            });
+            if (res.ok) {
+                showToast(`Exam status updated to ${status}.`, 'success');
+                await loadExams();
+            } else {
+                const d = await res.json();
+                showToast(d.error || 'Failed to update exam status.', 'error');
+            }
+        }
+
+        async function loadUsersDirectory() {
+            const [stuRes, facRes] = await Promise.all([
+                EPAP_API.epapFetch('/api/admin/students'),
+                EPAP_API.epapFetch('/api/admin/faculty')
+            ]);
+            const students = await stuRes.json();
+            const faculty = await facRes.json();
+            const tbody = document.getElementById('usersDirectoryBody');
+            if (!tbody) return;
+            const rows = [
+                ...(Array.isArray(faculty) ? faculty.map(f => ({ uid: f.user_id, id: f.faculty_id, name: f.full_name, role: 'faculty', email: f.email })) : []),
+                ...(Array.isArray(students) ? students.map(s => ({ uid: s.user_id, id: s.zprn, name: s.full_name, role: 'student', email: s.email })) : [])
+            ];
+            if (rows.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">No faculty or students added yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = rows.map(u => `
+                <tr>
+                    <td class="font-monospace fw-bold">${escapeHtml(u.id)}</td>
+                    <td>${escapeHtml(u.name)}</td>
+                    <td><span class="badge ${u.role === 'faculty' ? 'bg-warning text-dark' : 'bg-primary'}">${escapeHtml(u.role)}</span></td>
+                    <td>${escapeHtml(u.email)}</td>
+                    <td class="text-end">
+                        <button class="btn btn-outline-secondary btn-sm py-0 px-2 me-1" onclick="editUserEmail(${u.uid}, '${escapeHtml(u.email)}')">Edit Email</button>
+                        <button class="btn btn-outline-danger btn-sm py-0 px-2" onclick="resetUserPw(${u.uid}, '${escapeHtml(u.id)}')">Reset Password</button>
+                    </td>
+                </tr>`).join('');
+        }
+
+        async function resetUserPw(uid, ident) {
+            const ok = await EPAP_UI.confirmDialog({
+                title: 'Reset Password',
+                message: `Issue a new temporary password for ${ident}?`,
+                confirmText: 'Reset Password',
+                confirmClass: 'btn-danger'
+            });
+            if (!ok) return;
+            const res = await EPAP_API.epapFetch(`/api/admin/users/${uid}/reset-password`, { method: 'POST', body: JSON.stringify({}) });
+            const d = await res.json();
+            if (!res.ok) { showToast(d.error || 'Failed to reset password.', 'error'); return; }
+            showOneTimeSecretModal('Temporary Password Issued', `Temporary password for ${d.identifier} (shown once):`, d.temp_password);
+        }
+
+        async function editUserEmail(uid, currentEmail) {
+            const next = await showEditEmailModal(currentEmail);
+            if (!next || next === currentEmail) return;
+            const ok = await EPAP_UI.confirmDialog({
+                title: 'Confirm Email Change',
+                message: `Confirm changing email from ${currentEmail} to ${next}?`,
+                confirmText: 'Confirm Change',
+                confirmClass: 'btn-primary'
+            });
+            if (!ok) return;
+            const res = await EPAP_API.epapFetch(`/api/admin/users/${uid}/email`, {
+                method: 'POST',
+                body: JSON.stringify({ email: next, confirm: true })
+            });
+            const d = await res.json();
+            if (!res.ok) { showToast(d.error || 'Failed to update email.', 'error'); return; }
+            showToast('Email updated and audit-logged.', 'success');
+            await EPAP_SHELL.refreshNow(true);
+        }
+
+        async function handleAddSubject(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const res = await EPAP_API.epapFetch('/api/admin/subjects', { method: 'POST', body: JSON.stringify(Object.fromEntries(fd)) });
+            const d = await res.json();
+            bootstrap.Modal.getInstance(document.getElementById('addSubjectModal'))?.hide();
+            if (!res.ok) { showToast(d.error || 'Failed to add subject.', 'error'); return; }
+            showToast('Subject added!', 'success');
+            e.target.reset();
+            await EPAP_SHELL.refreshNow(true);
+        }
+
+        async function handleAddFaculty(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const res = await EPAP_API.epapFetch('/api/admin/faculty', { method: 'POST', body: JSON.stringify(Object.fromEntries(fd)) });
+            const d = await res.json();
+            bootstrap.Modal.getInstance(document.getElementById('addFacultyModal'))?.hide();
+            if (!res.ok) { showToast(d.error || 'Failed to add faculty.', 'error'); return; }
+            showOneTimeSecretModal('Faculty Created', `Temporary password for ${d.faculty_id} (shown once):`, d.temp_password);
+            e.target.reset();
+            await EPAP_SHELL.refreshNow(true);
+        }
+
+        async function handleAddStudent(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const res = await EPAP_API.epapFetch('/api/admin/students', { method: 'POST', body: JSON.stringify(Object.fromEntries(fd)) });
+            const d = await res.json();
+            bootstrap.Modal.getInstance(document.getElementById('addStudentModal'))?.hide();
+            if (!res.ok) { showToast(d.error || 'Failed to add student.', 'error'); return; }
+            showOneTimeSecretModal('Student Created', `Temporary password for ${d.identifier} (shown once):`, d.temp_password);
+            e.target.reset();
+            await EPAP_SHELL.refreshNow(true);
+        }
+
+        async function handleAddExam(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const res = await EPAP_API.epapFetch('/api/admin/exams', { method: 'POST', body: JSON.stringify(Object.fromEntries(fd)) });
+            const d = await res.json();
+            bootstrap.Modal.getInstance(document.getElementById('addExamModal'))?.hide();
+            if (!res.ok) { showToast(d.error || 'Failed to create exam.', 'error'); return; }
+            showToast('Exam session created!', 'success');
+            e.target.reset();
+            await loadExams();
+        }
+
+        async function loadSettings() {
+            const res = await EPAP_API.epapFetch('/api/admin/settings');
+            if (!res.ok) return;
+            const s = await res.json();
+            const form = document.getElementById('settingsForm');
+            if (!form) return;
+            Object.keys(s).forEach(k => {
+                if (form.elements[k]) form.elements[k].value = s[k];
+            });
+        }
+
+        async function saveSettings(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const res = await EPAP_API.epapFetch('/api/admin/settings', { method: 'POST', body: JSON.stringify(Object.fromEntries(fd)) });
+            const d = await res.json();
+            if (!res.ok) { showToast(d.error || 'Failed to save settings.', 'error'); return; }
+            showToast('Settings saved!', 'success');
+            EPAP_API.loadPublicSettings();
+        }
+    </script>
+</body>
+</html>

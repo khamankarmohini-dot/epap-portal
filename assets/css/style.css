@@ -1,0 +1,394 @@
+:root {
+    --zeal-navy: #002147;
+    --zeal-navy-dark: #00152e;
+    --zeal-indigo: #4f46e5;
+    --zeal-indigo-hover: #4338ca;
+    --zeal-gold: #f59e0b;
+    --zeal-gold-light: #fef3c7;
+    --zeal-light-bg: #f8fafc;
+    --zeal-card-bg: #ffffff;
+    --zeal-border: #e2e8f0;
+    --zeal-text-main: #0f172a;
+    --zeal-text-muted: #64748b;
+    --sidebar-width: 260px;
+    --topbar-height: 70px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--zeal-light-bg);
+    color: var(--zeal-text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ========================================================
+   GLOBAL HEADER & BRANDING
+   ======================================================== */
+.zeal-topbar {
+    height: var(--topbar-height);
+    background: #ffffff;
+    border-bottom: 1px solid var(--zeal-border);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.brand-badge {
+    background: linear-gradient(135deg, var(--zeal-navy), var(--zeal-indigo));
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+.portal-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+.portal-tag-student {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+.portal-tag-faculty {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+.portal-tag-admin {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ========================================================
+   SIDEBAR LAYOUT
+   ======================================================== */
+.app-layout {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - var(--topbar-height));
+}
+
+.app-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--zeal-navy-dark);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    z-index: 1020;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 1rem 0.75rem;
+    margin: 0;
+}
+
+.sidebar-nav .nav-header {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #94a3b8;
+    padding: 0.75rem 0.75rem 0.25rem 0.75rem;
+    font-weight: 700;
+}
+
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 0.9rem;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.sidebar-nav .nav-link i {
+    font-size: 1.15rem;
+    margin-right: 0.75rem;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-nav .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-nav .nav-link.active {
+    color: #ffffff;
+    background: linear-gradient(90deg, var(--zeal-indigo), #6366f1);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.sidebar-nav .nav-link .badge {
+    margin-left: auto;
+}
+
+.main-content {
+    flex: 1;
+    padding: 1.75rem 2rem;
+    background-color: var(--zeal-light-bg);
+    overflow-y: auto;
+}
+
+/* ========================================================
+   GLOBAL FOOTER
+   ======================================================== */
+.zeal-footer {
+    background-color: #ffffff;
+    border-top: 1px solid var(--zeal-border);
+    color: var(--zeal-text-muted);
+    font-size: 0.82rem;
+    padding: 1.25rem 2rem;
+    text-align: center;
+}
+
+.zeal-footer strong {
+    color: var(--zeal-navy);
+}
+
+/* ========================================================
+   CARDS & STAT WIDGETS
+   ======================================================== */
+.card-academic {
+    background: #ffffff;
+    border: 1px solid var(--zeal-border);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-academic:hover {
+    box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.08);
+}
+
+.stat-widget {
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--zeal-border);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-widget .stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 1.2rem;
+    flex-shrink: 0;
+}
+
+.stat-widget .stat-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--zeal-navy);
+}
+
+.stat-widget .stat-label {
+    font-size: 0.85rem;
+    color: var(--zeal-text-muted);
+    font-weight: 500;
+}
+
+/* ========================================================
+   DEADLINE BADGES & TIMERS
+   ======================================================== */
+.deadline-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 6px;
+}
+.deadline-urgent {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.deadline-warning {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+.deadline-safe {
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+/* ========================================================
+   LEETCODE-STYLE PROGRAMMING ARENA
+   ======================================================== */
+.coding-container {
+    display: flex;
+    height: calc(100vh - var(--topbar-height) - 150px);
+    border: 1px solid var(--zeal-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.problem-pane {
+    flex: 1;
+    border-right: 1px solid var(--zeal-border);
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.editor-pane {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    background: #1e1e1e;
+}
+
+.editor-toolbar {
+    background: #252526;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #333333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.code-editor-area {
+    flex: 1;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: none;
+    padding: 1rem;
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+}
+
+.console-output {
+    height: 160px;
+    background: #18181b;
+    border-top: 1px solid #333333;
+    padding: 0.75rem 1rem;
+    color: #a1a1aa;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    overflow-y: auto;
+}
+
+/* ========================================================
+   PREDICTIVE ANALYTICS STYLING
+   ======================================================== */
+.prediction-box {
+    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    padding: 1.25rem;
+}
+
+.prediction-disclaimer {
+    font-size: 0.75rem;
+    color: #64748b;
+    border-left: 3px solid #f59e0b;
+    padding-left: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .app-sidebar {
+        position: fixed;
+        left: -100%;
+        top: var(--topbar-height);
+        bottom: 0;
+    }
+    .app-sidebar.show {
+        left: 0;
+    }
+    .main-content {
+        padding: 1.25rem 1rem;
+    }
+    .coding-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .problem-pane, .editor-pane {
+        width: 100%;
+        height: 450px;
+    }
+}
+
+@media (max-width: 576px) {
+    .zeal-topbar {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    .main-content {
+        padding: 1rem 0.75rem;
+    }
+    .stat-widget {
+        padding: 1rem;
+    }
+    .stat-widget .stat-number {
+        font-size: 1.4rem;
+    }
+    .btn-sm {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Accessibility & Polish */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--zeal-indigo);
+    outline-offset: 2px;
+}
+
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

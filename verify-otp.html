@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2-Step Email OTP Verification | Zeal EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .otp-input-group { display: flex; gap: 10px; justify-content: center; }
+        .otp-input-field {
+            width: 48px; height: 56px; text-align: center;
+            font-size: 1.5rem; font-weight: 700; border-radius: 8px;
+            border: 2px solid #cbd5e1; background: #ffffff; transition: all 0.2s ease;
+        }
+        .otp-input-field:focus {
+            border-color: var(--zeal-indigo); outline: none;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <header class="zeal-topbar d-flex align-items-center px-4">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none">
+            <div class="brand-badge me-3">
+                <i class="bi bi-mortarboard-fill me-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div>
+                <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.95rem;" data-setting="institution_name">EPAP Academic Portal</h6>
+                <small class="text-muted" style="font-size: 0.78rem;"><span data-setting="department_name">Department Portal</span> — EPAP</small>
+            </div>
+        </a>
+        <div class="ms-auto">
+            <a href="login.html" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-x-circle me-1"></i>Cancel Login
+            </a>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="card card-academic border-0 shadow-lg p-2">
+                    <div class="card-body p-4 text-center">
+
+                        <div class="stat-icon mx-auto mb-3 bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-envelope-at-fill"></i>
+                        </div>
+
+                        <h4 class="fw-bold text-dark mb-1">Enter 6-Digit Email OTP</h4>
+                        <p class="text-muted small mb-3">
+                            A secure single-use code was dispatched via SMTP to your registered college email:
+                        </p>
+
+                        <div class="badge bg-light text-primary border px-3 py-2 fs-6 mb-4 font-monospace" id="maskedEmailDisplay">
+                            loading...
+                        </div>
+
+                        <div id="otpAlert" class="alert d-none mb-3 py-2 small" role="alert"></div>
+
+                        <div id="devHint" class="alert alert-info py-2 small mb-3 d-none">
+                            <i class="bi bi-terminal me-1"></i>
+                            <strong>Local Mode:</strong> Your OTP is <strong id="devOtpDisplay"></strong>
+                        </div>
+
+                        <form id="otpForm" onsubmit="handleOtpVerification(event)">
+                            <div class="otp-input-group mb-4">
+                                <input type="text" maxlength="1" class="otp-input-field" autofocus pattern="[0-9]*" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-field" pattern="[0-9]*" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-field" pattern="[0-9]*" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-field" pattern="[0-9]*" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-field" pattern="[0-9]*" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-input-field" pattern="[0-9]*" inputmode="numeric">
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                                <span class="small text-muted">
+                                    <i class="bi bi-clock-history me-1"></i>Expires in:
+                                    <strong class="text-danger" id="timerDisplay">05:00</strong>
+                                </span>
+                                <button type="button" class="btn btn-link btn-sm text-decoration-none text-muted p-0"
+                                        id="resendBtn" disabled onclick="resendOtp()">
+                                    Resend Code (<span id="resendCountdown">60</span>s)
+                                </button>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-medium shadow-sm"
+                                    id="verifyBtn" style="background-color: var(--zeal-navy); border-color: var(--zeal-navy);">
+                                Verify &amp; Access Dashboard <i class="bi bi-box-arrow-in-right ms-1"></i>
+                            </button>
+                        </form>
+
+                        <div class="alert alert-info py-2 px-3 mt-4 text-start small mb-0 border-0 bg-light">
+                            <i class="bi bi-info-circle-fill text-info me-1"></i>
+                            <strong>Audit Security:</strong> Login timestamp and IP are recorded in the audit trail upon successful verification.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="zeal-footer mt-auto">
+        <div class="container text-center">
+            <div data-setting="institution_name">EPAP Academic Portal</div>
+            <div class="small text-muted mt-1"><span data-setting="department_name">Department Portal</span> &copy; 2026. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script>
+        const inputs = document.querySelectorAll('.otp-input-field');
+
+        function applyDevOtp(code) {
+            if (!code) return;
+            document.getElementById('devHint').classList.remove('d-none');
+            document.getElementById('devOtpDisplay').textContent = code;
+            String(code).split('').forEach((ch, i) => { if (inputs[i]) inputs[i].value = ch; });
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            EPAP_API.ensureCsrfToken();
+            EPAP_API.loadPublicSettings && EPAP_API.loadPublicSettings();
+            try {
+                const res = await fetch(EPAP_API.apiUrl('/api/auth/otp-session'), { credentials: 'same-origin' });
+                const info = await res.json();
+                if (!info.active) {
+                    window.location.href = EPAP_API.apiUrl('/login.html');
+                    return;
+                }
+                document.getElementById('maskedEmailDisplay').textContent = info.maskedEmail || '***@***';
+                if (info.isLocal === true && info.devOtp) {
+                    applyDevOtp(info.devOtp);
+                }
+                startResendCooldown(typeof info.resendCooldownRemaining === 'number' ? info.resendCooldownRemaining : 60);
+            } catch (e) {
+                showAlert('Could not load verification session.');
+            }
+        });
+
+        function showAlert(msg, type = 'danger') {
+            const el = document.getElementById('otpAlert');
+            el.className = `alert alert-${type} mb-3 py-2 small`;
+            el.textContent = msg;
+            el.classList.remove('d-none');
+        }
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) inputs[index + 1].focus();
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) inputs[index - 1].focus();
+            });
+        });
+
+        let totalSeconds = 300;
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerInterval = setInterval(() => {
+            totalSeconds--;
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.innerText = 'Expired';
+                document.getElementById('verifyBtn').disabled = true;
+            } else {
+                const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+                const s = String(totalSeconds % 60).padStart(2, '0');
+                timerDisplay.innerText = `${m}:${s}`;
+            }
+        }, 1000);
+
+        let resendSec = 60;
+        let resendInterval = null;
+        function startResendCooldown(initialSec = 60) {
+            resendSec = Math.max(0, initialSec);
+            const btn = document.getElementById('resendBtn');
+            if (resendInterval) clearInterval(resendInterval);
+            if (resendSec === 0) {
+                btn.disabled = false;
+                btn.innerHTML = 'Resend Code Now';
+                btn.classList.remove('text-muted');
+                btn.classList.add('text-primary');
+                return;
+            }
+            btn.disabled = true;
+            btn.classList.add('text-muted');
+            btn.classList.remove('text-primary');
+            btn.innerHTML = `Resend Code (<span id="resendCountdown">${resendSec}</span>s)`;
+            resendInterval = setInterval(() => {
+                resendSec--;
+                const cd = document.getElementById('resendCountdown');
+                if (cd) cd.textContent = resendSec;
+                if (resendSec <= 0) {
+                    clearInterval(resendInterval);
+                    btn.disabled = false;
+                    btn.innerHTML = 'Resend Code Now';
+                    btn.classList.replace('text-muted', 'text-primary');
+                }
+            }, 1000);
+        }
+
+        async function resendOtp() {
+            try {
+                const res = await EPAP_API.epapFetch('/api/auth/resend-otp', { method: 'POST' });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.error || 'Could not resend OTP.');
+                    return;
+                }
+                showAlert('A new 6-digit OTP has been sent to your email.', 'success');
+                totalSeconds = 300;
+                document.getElementById('verifyBtn').disabled = false;
+                if (data.devOtp) applyDevOtp(data.devOtp);
+                startResendCooldown();
+            } catch (err) {
+                showAlert('Network error while resending OTP.');
+            }
+        }
+
+        async function handleOtpVerification(e) {
+            e.preventDefault();
+            const otp = Array.from(inputs).map(i => i.value).join('');
+            if (otp.length !== 6) {
+                showAlert('Please enter the complete 6-digit OTP.');
+                return;
+            }
+
+            const btn = document.getElementById('verifyBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Verifying...';
+
+            try {
+                const res = await EPAP_API.epapFetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    body: JSON.stringify({ otp })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showAlert(data.error || 'Invalid OTP. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Verify &amp; Access Dashboard <i class="bi bi-box-arrow-in-right ms-1"></i>';
+                    return;
+                }
+
+                window.location.href = data.redirectTo;
+            } catch (err) {
+                showAlert('Could not reach server. Is the EPAP server running?');
+                btn.disabled = false;
+                btn.innerHTML = 'Verify &amp; Access Dashboard <i class="bi bi-box-arrow-in-right ms-1"></i>';
+            }
+        }
+    </script>
+</body>
+</html>

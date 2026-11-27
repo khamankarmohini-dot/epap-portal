@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Manage Activities &amp; Evaluations | Faculty Portal | EPAP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Unified Top Bar -->
+    <header class="zeal-topbar d-flex align-items-center px-3 px-md-4">
+        <button class="btn btn-light d-lg-none me-2" id="sidebarToggleBtn" aria-label="Toggle navigation menu"><i class="bi bi-list fs-5"></i></button>
+
+        <div class="d-flex align-items-center min-w-0">
+            <div class="brand-badge me-2 me-md-3 flex-shrink-0">
+                <i class="bi bi-mortarboard-fill me-1 me-md-2 fs-5"></i>
+                <span data-setting="short_logo_text">EPAP</span>
+            </div>
+            <div class="d-none d-sm-block text-truncate">
+                <h6 class="mb-0 fw-bold text-dark text-truncate" style="font-size: 0.92rem;" data-setting="institution_name">Academic Portal</h6>
+                <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;"><span data-setting="department_name">Department</span> &bull; EPAP</small>
+            </div>
+        </div>
+
+        <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+            <span class="portal-tag portal-tag-faculty d-none d-md-inline-block">Faculty Portal</span>
+            <div class="dropdown">
+                <button class="btn btn-light btn-sm d-flex align-items-center gap-2 border px-2 py-1 rounded-pill" data-bs-toggle="dropdown" aria-label="User profile menu">
+                    <div data-shell="avatar" class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; font-size: 0.85rem; font-weight: 700;">—</div>
+                    <div class="text-start d-none d-md-block" style="line-height: 1.1; max-width: 160px;">
+                        <span data-shell="user-name" class="d-block fw-bold small text-dark text-truncate">Loading...</span>
+                        <span data-shell="user-id" class="d-block text-muted font-monospace text-truncate" style="font-size: 0.68rem;">—</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-muted small ms-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                    <li><a class="dropdown-item small" href="faculty-dashboard.html"><i class="bi bi-grid-1x2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item small" href="profile.html"><i class="bi bi-person me-2"></i>Profile &amp; Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item small text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar" id="appSidebar" aria-label="Faculty navigation">
+            <div class="p-3 border-bottom border-secondary border-opacity-25">
+                <div class="small text-light opacity-75">Academic Role</div>
+                <div class="fw-bold text-white small" id="sidebarFacultyRole">Loading...</div>
+                <div class="badge bg-warning text-dark mt-1 text-wrap text-start" id="sidebarFacultyClasses" style="font-size: 0.7rem;">—</div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="nav-header">Faculty Menu</li>
+                <li><a href="faculty-dashboard.html" class="nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
+                <li>
+                    <a href="faculty-activities.html" class="nav-link active">
+                        <i class="bi bi-folder-check"></i>
+                        <span>Manage Activities</span>
+                        <span class="badge bg-danger d-none" id="sidebarFacultyPendingBadge"></span>
+                    </a>
+                </li>
+                <li><a href="faculty-analytics.html" class="nav-link"><i class="bi bi-bar-chart-line"></i><span>Class Analytics</span></a></li>
+
+                <li class="nav-header">Allocated Courses</li>
+                <div id="sidebarAllocatedCourses">
+                    <li><span class="nav-link text-white-50 small">Loading courses...</span></li>
+                </div>
+
+                <li class="nav-header">Account</li>
+                <li><a href="profile.html" class="nav-link"><i class="bi bi-person-gear"></i><span>Profile &amp; Password</span></a></li>
+                <li><a href="login.html" class="nav-link text-danger"><i class="bi bi-box-arrow-left"></i><span>Sign Out</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <div>
+                    <h4 class="fw-bold text-dark mb-1">Subject Activities &amp; Submission Management</h4>
+                    <p class="text-muted small mb-0">Create, publish, and evaluate academic coursework for your allocated divisions</p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-warning fw-bold text-dark btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#createActivityModal">
+                        <i class="bi bi-plus-circle me-1"></i>Create New Activity
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" id="exportGradesBtn">
+                        <i class="bi bi-file-earmark-excel me-1"></i>Export All Marks (CSV)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activities Table -->
+            <div class="card card-academic border-0 shadow-sm">
+                <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h6 class="fw-bold mb-0 text-dark">Published Activities (<span id="facultyActivitiesCount">0</span>)</h6>
+                    <span class="badge bg-light text-dark border">Academic Session <span data-setting="academic_year">—</span></span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-muted text-uppercase">
+                            <tr>
+                                <th>Activity Title</th>
+                                <th>Subject &amp; Division</th>
+                                <th>Due Date &amp; Time</th>
+                                <th>Submissions</th>
+                                <th>Graded</th>
+                                <th>Status</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small" id="facultyActivitiesBody">
+                            <tr><td colspan="7" class="text-center text-muted py-4">Loading activities...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Create Activity Modal -->
+    <div class="modal fade" id="createActivityModal" tabindex="-1" aria-labelledby="createActTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light">
+                    <div>
+                        <h6 class="modal-title fw-bold text-dark" id="createActTitle"><i class="bi bi-plus-circle text-warning me-2"></i>Create New Academic Activity</h6>
+                        <small class="text-muted">Broadcast to all enrolled students in your assigned class</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="createActForm" onsubmit="handleCreateActivity(event)">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold" for="actAllocSelect">Select Allocated Subject &amp; Class</label>
+                                <select class="form-select" id="actAllocSelect" required>
+                                    <option value="">Loading allocations...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold" for="actTypeSelect">Activity Type</label>
+                                <select class="form-select" id="actTypeSelect" required>
+                                    <option selected>Lab Practical Journal</option>
+                                    <option>Theory Assignment</option>
+                                    <option>Mini-Project Milestone</option>
+                                    <option>Research Case Study</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small fw-bold" for="actTitleInput">Activity Title</label>
+                                <input type="text" id="actTitleInput" class="form-control" placeholder="e.g. Lab Assignment: Normalization & Indexing" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold" for="actDeadlineInput">Submission Due Date &amp; Time</label>
+                                <input type="datetime-local" id="actDeadlineInput" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold" for="actMaxMarksInput">Maximum Marks</label>
+                                <input type="number" id="actMaxMarksInput" class="form-control" min="1" max="100" value="25" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label small fw-bold" for="actDescInput">Problem Statement &amp; Instructions</label>
+                                <textarea id="actDescInput" class="form-control" rows="4" placeholder="Detail the objectives, input/output requirements, and evaluation rubrics..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="publishActBtn" class="btn btn-warning btn-sm px-4 fw-bold text-dark shadow-sm">
+                            <i class="bi bi-broadcast me-1"></i>Publish to Students
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official College Footer -->
+    <footer class="zeal-footer">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-md-start mb-2 mb-md-0">
+                    <strong data-setting="institution_name">Academic Institution</strong> &bull; <span data-setting="department_name">Department</span>
+                </div>
+                <div class="col-md-4 text-md-end small">
+                    Examination &amp; Predictive Analytics Portal (EPAP) &copy; 2026
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script>
+        function setDefaultDeadline() {
+            const inp = document.getElementById('actDeadlineInput');
+            if (!inp || inp.value) return;
+            const d = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+            d.setHours(23, 59, 0, 0);
+            const pad = n => String(n).padStart(2, '0');
+            inp.value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T23:59`;
+        }
+
+        async function loadFacultyAllocations() {
+            const res = await EPAP_API.epapFetch('/api/faculty/allocations');
+            const allocs = await res.json();
+            const sel = document.getElementById('actAllocSelect');
+            if (sel && Array.isArray(allocs)) {
+                const cur = sel.value;
+                if (allocs.length === 0) {
+                    sel.innerHTML = '<option value="">No active allocations assigned by HOD</option>';
+                } else {
+                    sel.innerHTML = allocs.map(a =>
+                        `<option value="${Number(a.subject_id)}|${escapeHtml(a.year)}|${escapeHtml(a.division)}">${escapeHtml(a.subject_name)} (${escapeHtml(a.subject_code)}) - ${escapeHtml(a.year)} Div ${escapeHtml(a.division)}</option>`
+                    ).join('');
+                    if (cur) sel.value = cur;
+                }
+            }
+        }
+
+        async function loadFacultyActivities() {
+            const res = await EPAP_API.epapFetch('/api/faculty/activities');
+            const activities = await res.json();
+            const tbody = document.getElementById('facultyActivitiesBody');
+            const countEl = document.getElementById('facultyActivitiesCount');
+            if (countEl) countEl.textContent = String(activities.length);
+            if (!tbody) return;
+
+            if (activities.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">No activities created yet.</td></tr>';
+                return;
+            }
+
+            const nowMs = Date.now() + (window.EPAP_SERVER_OFFSET_MS || 0);
+            tbody.innerHTML = activities.map(act => {
+                const deadlineStr = new Date(act.deadline).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+                const isClosed = new Date(act.deadline).getTime() < nowMs;
+                return `
+                <tr>
+                    <td>
+                        <strong class="text-dark">${escapeHtml(act.title)}</strong>
+                        <div class="text-muted" style="font-size: 0.72rem;">Max Marks: ${Number(act.max_marks)} &bull; ${escapeHtml(act.activity_type || '')}</div>
+                    </td>
+                    <td><span class="badge bg-primary-subtle text-primary">${escapeHtml(act.subject_code)}</span><br><small class="text-muted">${escapeHtml(act.year || '')} Div ${escapeHtml(act.division || '')}</small></td>
+                    <td>
+                        <div>${escapeHtml(deadlineStr)}</div>
+                        <small class="countdown-timer deadline-badge deadline-warning" data-deadline="${escapeHtml(act.deadline)}">Calculating...</small>
+                    </td>
+                    <td><strong class="text-dark">${Number(act.submission_count || 0)} / ${Number(act.total_students || 0)}</strong></td>
+                    <td><strong class="text-primary">${Number(act.graded_count || 0)} / ${Number(act.submission_count || 0)}</strong></td>
+                    <td><span class="badge ${isClosed ? 'bg-secondary' : 'bg-success-subtle text-success'}">${isClosed ? 'Closed' : 'Active'}</span></td>
+                    <td class="text-end">
+                        <a href="faculty-dashboard.html" class="btn btn-outline-primary btn-sm me-1">Grade</a>
+                        <button class="btn btn-outline-danger btn-sm" onclick="deleteActivity(${Number(act.id)})" aria-label="Delete activity"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+            updateCountdowns();
+        }
+
+        async function deleteActivity(id) {
+            const ok = await EPAP_UI.confirmDialog({
+                title: 'Delete Activity',
+                message: 'Delete this activity and all its student submissions? This action cannot be undone.',
+                confirmText: 'Delete',
+                confirmClass: 'btn-danger'
+            });
+            if (!ok) return;
+            const res = await EPAP_API.epapFetch(`/api/faculty/activities/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('Activity deleted.', 'success');
+                await EPAP_SHELL.refreshNow(true);
+            } else {
+                const d = await res.json();
+                showToast(d.error || 'Could not delete activity.', 'error');
+            }
+        }
+
+        async function handleCreateActivity(e) {
+            e.preventDefault();
+            const form = e.target;
+            const allocVal = document.getElementById('actAllocSelect').value;
+            const activityType = document.getElementById('actTypeSelect').value;
+            if (!allocVal || !allocVal.includes('|')) {
+                showToast('No allocated subject selected.', 'error');
+                return;
+            }
+            const [subject_id, year, division] = allocVal.split('|');
+            const title = document.getElementById('actTitleInput').value.trim();
+            const deadlineRaw = document.getElementById('actDeadlineInput').value;
+            const max_marks = parseInt(document.getElementById('actMaxMarksInput').value, 10) || 25;
+            const description = document.getElementById('actDescInput').value.trim();
+            const deadline = deadlineRaw.replace('T', ' ') + ':00';
+            const btn = document.getElementById('publishActBtn');
+
+            EPAP_UI.setButtonLoading(btn, true, 'Publishing...');
+            try {
+                const res = await EPAP_API.epapFetch('/api/faculty/activities', {
+                    method: 'POST',
+                    body: JSON.stringify({ subject_id: Number(subject_id), title, activity_type: activityType, description, max_marks, deadline, year, division })
+                });
+                const modal = bootstrap.Modal.getInstance(document.getElementById('createActivityModal'));
+                if (modal) modal.hide();
+                const d = await res.json();
+                if (!res.ok) {
+                    showToast(d.error || 'Failed to publish activity.', 'error');
+                    return;
+                }
+                form.reset();
+                setDefaultDeadline();
+                showToast('Activity published to students!', 'success');
+                await EPAP_SHELL.refreshNow(true);
+            } catch (err) {
+                showToast('Server error while publishing activity.', 'error');
+            } finally {
+                EPAP_UI.setButtonLoading(btn, false);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const me = await EPAP_API.epapRequireAuth('faculty');
+            if (!me) return;
+            EPAP_API.updateNavbarUser(me);
+            setDefaultDeadline();
+
+            const exportBtn = document.getElementById('exportGradesBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => { window.location.href = '/api/faculty/grades/export'; });
+            }
+
+            await loadFacultyAllocations();
+            EPAP_SHELL.init({ role: 'faculty', onRefresh: loadFacultyActivities });
+        });
+    </script>
+</body>
+</html>
